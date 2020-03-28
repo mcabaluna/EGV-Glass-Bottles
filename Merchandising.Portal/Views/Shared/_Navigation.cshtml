@@ -1,0 +1,171 @@
+﻿@using Microsoft.AspNet.Identity
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        @*<img alt="image" class="img-circle" src="~/Images/profile_small.jpg" />*@
+                        <span class="fa fa-user-circle-o fa-5x" style="color:whitesmoke"></span>
+                    </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                            @*<span class="block m-t-xs">
+                            @{
+                                string username = string.Empty;
+                                string role = string.Empty;
+                                var userid = HttpContext.Current.Session["Username"].ToString();
+                                //var userid = User.Identity.GetUserName();
+                                using(var db = new Merchandising.DTO.DbContextModel())
+                                {
+                                    var user = db.Users.FirstOrDefault(u => u.UserId.ToUpper() == userid.ToUpper());
+
+                                     username = user.UserName;
+                                     role = db.Roles.FirstOrDefault(x => x.RoleId == user.Role).RoleName;
+                                }
+                            }
+                            <strong class="font-bold">@username</strong>
+                        </span> <span class="text-muted text-xs block">@role</span>*@
+                        </span>
+                    </a>
+                </div>
+                <div class="logo-element">
+                    <img alt="image" class="img-circle fa-2x" src="~/Images/EGV/glass 32x32.ico" />
+                    MENU
+                </div>
+            </li>
+            <li class="@Html.IsSelected(controller: "Home")">
+                <a href="@Url.Action("Home_Index", "Home")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Home</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Home", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Home")"><a href="@Url.Action("Home_Index", "Home")"><i class="fa fa-circle-o"></i>Dashboard</a></li>
+                </ul>
+            </li>
+            @*@{
+                var role = HttpContext.Current.Session["Role"].ToString();
+                if (role == "OWNER")
+                {*@
+                    <li>
+                        <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label" data-i18n="nav.menulevels">Administration</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#"><i class="fa fa-circle-o"></i>Set-Up <span class="fa arrow"></span></a>
+                                @*<ul class="nav nav-third-level">
+                                    <li>
+                                        <a href="#"><i class="fa fa-arrow-circle-o-right"></i>Roles, Authorization and System Config<span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="@Url.Action("Index", "Roles")"><i class="fa fa-home"></i>Roles</a>
+                                                <a href="@Url.Action("Index", "RoleAuthorization")"><i class="fa fa-vcard-o"></i>User Authorization</a>
+                                                <a href="#"><i class="fa fa-contao"></i>System Configuration</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul>*@
+                                <ul class="nav nav-third-level">
+                                    <li>
+                                        <a href="#"><i class="fa fa-arrow-circle-o-right"></i>General <span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="#"><i class="fa fa-meanpath"></i>Master Data Uploader</a>
+                                                <a href="@Url.Action("Index", "SequenceTable")"><i class="fa fa-recycle"></i>Document Numbering</a>
+                                                <a href="@Url.Action("Index", "Users")"><i class="fa fa-user-circle-o"></i>Users</a>
+                                                <a href="@Url.Action("Index", "Branch")"><i class="fa fa-home"></i>Branch</a>
+                                                <a href="@Url.Action("Index", "Vat")"><i class="fa fa-vcard-o"></i>VAT</a>
+                                                <a href="@Url.Action("Index", "WTax")"><i class="fa fa-archive"></i>WTax</a>
+                                                <a href="@Url.Action("Index", "ModeOfPayment")"><i class="fa fa-bank"></i>Mode of Payment</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                                <ul class="nav nav-third-level">
+                                    <li>
+                                        <a href="#"><i class="fa fa-arrow-circle-o-right"></i>Business Partner <span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="@Url.Action("Index", "BPGroup")"><i class="fa fa-user-times"></i>BP Group</a>
+                                                <a href="@Url.Action("Index", "PaymentTerms")"><i class="fa fa-money"></i>Payment Terms</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                                <ul class="nav nav-third-level">
+                                    <li>
+                                        <a href="#"><i class="fa fa-arrow-circle-o-right"></i>Items <span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="@Url.Action("Index", "UoM")"><i class="fa fa-cc-discover"></i>UoM</a>
+                                                <a href="@Url.Action("Index", "ItemGroup")"><i class="fa fa-cart-plus"></i>Item Group</a>
+                                                <a href="@Url.Action("Index", "Warehouse")"><i class="fa fa-home"></i>Warehouse</a>
+                                                <a href="@Url.Action("Index", "PriceList")"><i class="fa fa-credit-card"></i>PriceList</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-th-list"></i> <span class="nav-label" data-i18n="nav.menulevels">MasterLists</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "MasterLists", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "BusinessPartner")"><a href="@Url.Action("Index", "BusinessPartner")"><i class="fa fa-circle-o"></i>Business Partners</a></li>
+                            <li class="@Html.IsSelected(action: "Items")"><a href="@Url.Action("Index", "Items")"><i class="fa fa-circle-o"></i>Items</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-shopping-cart"></i> <span class="nav-label" data-i18n="nav.menulevels">Transactions</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "MasterLists", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "SalesInvoice")"><a href="@Url.Action("Index", "SalesInvoice")"><i class="fa fa-circle-o"></i>Sales Invoice</a></li>
+                            <li class="@Html.IsSelected(action: "PurchaseInvoice")"><a href="@Url.Action("Index", "PurchaseInvoice")"><i class="fa fa-circle-o"></i>Purchase Invoice</a></li>
+                            <li class="@Html.IsSelected(action: "InvAdjustment")"><a href="@Url.Action("Index", "InvAdjustment")"><i class="fa fa-circle-o"></i>Inventory Adjustments</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-money"></i> <span class="nav-label" data-i18n="nav.menulevels">Payments</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Payments", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "Collection")"><a href="@Url.Action("Collection", "Incomings")"><i class="fa fa-circle-o"></i>Collection</a></li>
+                            <li class="@Html.IsSelected(action: "Payments")"><a href="@Url.Action("Pay", "Incomings")"><i class="fa fa-circle-o"></i>Payments</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label" data-i18n="nav.menulevels">Reports</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Crystals", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "Crystals")"><a href="#"><i class="fa fa-circle-o"></i>Item Ledger</a></li>
+                            <li class="@Html.IsSelected(action: "Crystals")"><a href="@Url.Action("TotalSales", "Crystals")"><i class="fa fa-circle-o"></i>Total Sales</a></li>
+                            <li class="@Html.IsSelected(action: "Crystals")"><a href="@Url.Action("TotalPurchase", "Crystals")"><i class="fa fa-circle-o"></i>Total Purchases</a></li>
+                            <li class="@Html.IsSelected(action: "Crystals")"><a href="@Url.Action("ItemsOnHand", "Crystals")"><i class="fa fa-circle-o"></i>Items on Hand</a></li>
+                            <li class="@Html.IsSelected(action: "Crystals")"><a href="@Url.Action("BPBalances", "Crystals")"><i class="fa fa-circle-o"></i>BP Balances</a></li>
+                        </ul>
+                    </li>
+
+                @*}
+                else
+                {
+                    <li>
+                        <a href="#"><i class="fa fa-shopping-cart"></i> <span class="nav-label" data-i18n="nav.menulevels">Transactions</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "MasterLists", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "SalesInvoice")"><a href="@Url.Action("Index", "SalesInvoice")"><i class="fa fa-circle-o"></i>Sales Invoice</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-money"></i> <span class="nav-label" data-i18n="nav.menulevels">Payments</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Payments", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "Collection")"><a href="@Url.Action("Collection", "Incomings")"><i class="fa fa-circle-o"></i>Collection</a></li>
+                        </ul>
+                    </li>
+                }*@
+
+                    @*}*@
+
+            <li class="#">
+                <a href="@Url.Action("Login", "Pages")"><i class="fa fa-power-off"></i> <span class="nav-label" data-i18n="nav.dashboard">Logout</span>  <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Pages", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Pages")"><a href="@Url.Action("LogOut", "Users")"><i class="fa fa-circle-o"></i>Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>

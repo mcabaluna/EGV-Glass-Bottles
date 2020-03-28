@@ -1,0 +1,417 @@
+﻿@model Merchandising.VM.Portal.IncomingsVM
+@{
+    ViewBag.Title = "Collection";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-7 col-md-7 col-lg-7">
+        <h2>Collections</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Home_Index", "Home")">Home</a>
+            </li>
+            <li>
+                <a>Payment</a>
+            </li>
+            <li class="active">
+                <strong>Collections</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+    <div class="ibox-heading">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-horizontal">
+                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                <h3>List of Collections</h3>
+                            </div>
+                            <div class="col-sm-7 col-md-7 col-lg-7">
+                                <div class="form-group pull-right">
+                                    <button type="button" class="btn btn-outline btn-rounded btn-primary" onclick="location.href='@Url.Action("Collection", "Incomings")'"><i class="fa fa-refresh"></i> Refresh</button>
+                                    <button type="button" class="btn btn-outline btn-rounded btn-primary" id="add"><i class="fa fa-plus-circle"></i> Create New</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-horizontal">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtsearch" placeholder="Search" />
+                                    <input type="hidden" class="form-control" id="invoicetype" value="SI" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ibox-content m-b-sm border-bottom">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div id="demoContent">
+                    @{
+                        var linkFormat = "<a id='doc_.(DocEntry)' class='view_doc'>.(PaymentNo)</a>";
+                        //var linkIconFormat = "<button type='button' id='doc_.(DocEntry)' class='edit_doc btn btn-warning'><i class='fa fa-pencil'></i></button>&nbsp;&nbsp;";
+                        var linkIconFormat = "<a id='doc_.(DocEntry)_.(IntStatus)' class='cancel_doc btn btn-danger'><i class='fa fa-trash'></i></a>";
+                    }
+                    @(Html.Awe().Grid("ApiDemoGrid")
+                                .Columns(new[]
+                                {
+                                    //new Column{ClientFormat= linkIconFormat, Width = 120},
+                                    new Column{ClientFormat= linkIconFormat,Header="Action", Width = 70},
+                                    new Column {Bind = "DocEntry", Header = "Doc Entry" ,Hidden=true },
+                                    new Column {Bind = "IntStatus", Header = "Hide Status" ,Hidden=true },
+                                    new Column {Bind = "DocNum", Header = "Doc Num" ,Hidden=true },
+                                     new Column {Bind = "BranchCode", Header = "Branch"  },
+                                    new Column {Bind = "PaymentNo", Header = "Payment No.",ClientFormat = linkFormat},
+                                    new Column {Bind = "CardCode", Header = "Card Code"  },
+                                    new Column {Bind = "CardName", Header = "Card Name"  },
+                                    new Column {Bind = "DueDate", Header = "Due Date"  },
+                                    new Column {Bind = "DatePaid", Header = "Payment Date"  },
+                                    //new Column {Bind = "Collections", Header = "Collections"  },
+                                    //new Column {Bind = "Balance", Header = "Balance"  },
+                                    new Column {Bind = "AmountPaid", Header = "Amount Paid"  },
+                                    new Column {Bind = "Remarks", Header = "Remarks"  },
+                                    new Column {Bind = "Status", Header = "Status", ClientFormatFunc = "Statustoggle", Width = 90}
+                                })
+                                .Mod(o => o.PageInfo().PageSize().ColumnsSelector())
+                                .Resizable()
+                                .Reorderable()
+                                .Height(400)
+                                .Groupable(false)
+                                .Selectable(SelectionType.Single)
+                                .Parent("filter", "filter")
+                                    .Parent("invoicetype", "invoicetype")
+                                .Parent("txtsearch", "search")
+                                .Url(Url.Action("GetList", "Incomings")))
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Payment header details-->
+<div class="modal inmodal" id="MyModalPayment" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width:70%">
+        <div class="modal-content animated bounceInRight">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a href="#" class="close" data-dismiss="modal">&times;</a>
+                            <h3 id="ModalTitle">Create Collection</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="wrapper wrapper-content animated fadeInRight">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="ibox">
+                                            <div class="ibox-title">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="pull-right">
+                                                            <div class="form-group">
+                                                                <button class="btn btn-outline btn-rounded btn-primary" type="button" id="incoming">Add Collection</button>
+                                                                <button class="btn btn-outline btn-rounded btn-danger" type="button" id="close">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <div class="row">
+                                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="form-horizontal">
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.Incomings.CardCode, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                                                <div class="col-sm-7 col-md-7 col-lg-7">
+                                                                    @Html.DropDownListFor(model => model.Incomings.CardCode, new SelectList(Model.CustomerOption, "Value", "Value"), "", new { @class = "form-control chosen-select", @id = "cardcode" })
+                                                                    <input type="hidden" id="bpwtaxliable" />
+                                                                </div>
+                                                                <div class="col-sm-2 col-md-2 col-lg-2">
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.Incomings.CardName, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                                                <div class="col-sm-7 col-md-7 col-lg-7">
+                                                                    @Html.DropDownListFor(model => model.Incomings.CardName, new SelectList(Model.CustomerOption, "Value", "Text"), "", new { @class = "form-control chosen-select", @id = "cardname" })
+                                                                </div>
+                                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.Incomings.Remarks, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                                                <div class="col-sm-7 col-md-7 col-lg-7">
+                                                                    @Html.EditorFor(model => model.Incomings.Remarks, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "remarks" } })
+                                                                </div>
+                                                                <div class="col-sm-2 col-md-2 col-lg-2">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                                </div>
+                                                                @Html.LabelFor(model => model.Incomings.DocNum, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                                    @Html.DropDownListFor(model => model.Incomings.Series, new SelectList(Model.SeriesOption, "Value", "Value"), "", new { @class = "form-control chosen-select", @id = "series" })
+                                                                </div>
+                                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                                    @Html.EditorFor(model => model.Incomings.DocNum, new { htmlAttributes = new { @class = "form-control", id = "docnum", @disabled = "disabled" } })
+                                                                    <input type="hidden" id="pino" />
+                                                                </div>
+                                                            </div>
+                                                            @*<div class="form-group">
+                                                                    <div class="col-sm-2 col-md-2 col-lg-2">
+
+                                                                    </div>
+                                                                    @Html.LabelFor(model => model.StatusOption, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                                                    <div class="col-sm-7 col-md-7 col-lg-7">
+                                                                        @Html.DropDownListFor(model => model.StatusOption, new SelectList(Model.StatusOption, "Value", "Text"), "", new { @class = "form-control chosen-select", @id = "status", @disabled = "disabled" })
+                                                                    </div>
+                                                                </div>*@
+                                                            <div class="form-group" id="data_1">
+                                                                <div class="col-sm-2 col-md-2 col-lg-2">
+
+                                                                </div>
+                                                                @Html.LabelFor(model => model.Incomings.DatePaid, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                                                <div class="col-sm-7 col-md-7 col-lg-7">
+
+                                                                    <div class="input-group date">
+                                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>@Html.EditorFor(model => model.Incomings.DatePaid, new { htmlAttributes = new { @class = "form-control", @id = "date", @Value = DateTime.Now.ToShortDateString(), @disabled = "disabled" } })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" id="data_1">
+                                                                <div class="col-sm-2 col-md-2 col-lg-2">
+
+                                                                </div>
+                                                                @Html.LabelFor(model => model.Incomings.DueDate, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                                                <div class="col-sm-7 col-md-7 col-lg-7">
+
+                                                                    <div class="input-group date">
+                                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>@Html.EditorFor(model => model.Incomings.DueDate, new { htmlAttributes = new { @class = "form-control", @id = "duedate", @Value = DateTime.Now.ToShortDateString(), @disabled = "disabled" } })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="tabs-container">
+                                            <ul class="nav nav-tabs">
+                                                <li class="active"><a data-toggle="tab" href="#tab-1">Invoice Details</a></li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div id="tab-1" class="tab-pane active">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="form-horizontal">
+                                                                    <div class="form-group">
+                                                                        <div class="table-responsive">
+                                                                            <div id="divForm" style="background-color:white;overflow:scroll;height:300px;" class="general-tab-table">
+                                                                                <table id="tableList" class="footable table table-stripped table-hover table-striped table-bordered">
+                                                                                    <thead>
+                                                                                        <tr style="position:sticky;">
+                                                                                            <th><div style="width:130px">Invoice No.</div></th>
+                                                                                            <th><div style="width:100px">Due Date</div></th>
+                                                                                            <th><div style="width:80px">Gross Total</div></th>
+                                                                                            <th><div style="width:80px">Collection</div></th>
+                                                                                            <th><div style="width:120px">Balance</div></th>
+                                                                                            <th><div style="width:70px">Amount to Pay</div></th>
+                                                                                            <th><div style="width:20px"></div></th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody></tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="ibox">
+                                            <div class="ibox-content">
+                                                <div class="row">
+                                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    </div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                                        <div class="form-group">
+                                                            <div class="control-label col-sm-12 col-md-12 col-lg-12">
+                                                                <label>Total Amount to be Paid</label>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                @Html.EditorFor(model => model.Incomings.AmountPaid, new { htmlAttributes = new { @class = "form-control text-right", @readonly = "true", @placeholder = "0.00", @id = "total" } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.ModeOfPaymentOption, htmlAttributes: new { @class = "control-label col-sm-12 col-md-12 col-lg-12" })
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                @Html.DropDownListFor(model => model.ModeOfPaymentOption, new SelectList(Model.ModeOfPaymentOption, "Value", "Text"), "", new { @class = "form-control chosen-select", @id = "modeofpayment" })
+                                                            </div>
+                                                        </div>
+                                                        @*<div class="form-group" id="data_1">
+                                                                <div class="control-label col-sm-12 col-md-12 col-lg-12">
+                                                                    <label>Date Paid</label>
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-12 col-lg-12">
+
+                                                                    <div class="input-group date">
+                                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                        <input type="text" id="datepaid" class="form-control" value="@DateTime.Now.ToShortDateString()" disabled />
+                                                                    </div>
+                                                                </div>
+                                                            </div>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Collection Details-->
+<div class="modal inmodal" id="MyModalCollection" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width:30%">
+        <div class="modal-content animated bounceInLeft">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h4 id="ModalTitle">Collection Details</h4>
+                    <i class="fa fa-cc-visa text-success"></i>
+                    <i class="fa fa-cc-mastercard text-warning"></i>
+                    <i class="fa fa-cc-paypal text-danger"></i>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="control-label col-sm-4 col-md-4 col-lg-4">
+                                <label>Total to be Paid</label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <input type="text" id="totaltopay" class="c4 form-control totaltopay" placeholder="0.00" onkeypress="return isNumberKey(event)" disabled />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="control-label col-sm-4 col-md-4 col-lg-4">
+                                <label>Amount Paid</label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <input type="text" id="amountpaid" class="c4 form-control amountpaid" placeholder="0.00" onkeypress="return isNumberKey(event)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="control-label col-sm-4 col-md-4 col-lg-4">
+                                <label>Balance</label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <input type="text" id="balance" class="c4 form-control balance" placeholder="0.00" onkeypress="return isNumberKey(event)" disabled />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ModeOfPaymentOption, htmlAttributes: new { @class = "control-label col-sm-4 col-md-4 col-lg-4" })
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                @Html.DropDownListFor(model => model.ModeOfPaymentOption, new SelectList(Model.ModeOfPaymentOption, "Value", "Text"), "", new { @class = "form-control chosen-select", @id = "modeofpayment" })
+                            </div>
+                        </div>
+                        <div class="form-group" id="data_1">
+                            <div class="control-label col-sm-4 col-md-4 col-lg-4">
+                                <label>Date Paid</label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" id="datepaid" class="form-control" value="@DateTime.Now.ToShortDateString()" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline btn-sm btn-rounded btn-info" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/laddaStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/dateRangeStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/plugins/switcheryStyles")
+    <link href="~/Content/plugins/sweetalert/sweetalert2.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-toggle.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/ladda")
+    <script src="~/Scripts/bootstap-toggle.js"></script>
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/dateRange")
+    <script src="~/Scripts/plugins/sweetalert/sweetalert2.min.js"></script>
+    <script src="~/Scripts/MerchandisingJS/Incomings/Collection.js"></script>
+}
+<style>
+    .boldh .awe-col, .boldh {
+        color: blue;
+    }
+
+    .bluev {
+        color: blueviolet;
+    }
+
+    .pinkb {
+        background: pink !important;
+    }
+
+    .greenb {
+        background: #f0f9f7 !important;
+    }
+</style>
+

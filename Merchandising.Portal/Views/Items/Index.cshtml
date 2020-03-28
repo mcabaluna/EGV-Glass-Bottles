@@ -1,0 +1,384 @@
+﻿@model Merchandising.VM.Portal.ItemsVM
+@{
+    ViewBag.Title = "Items";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-7 col-md-7 col-lg-7">
+        <h2>Items</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Home_Index", "Home")">Home</a>
+            </li>
+            <li>
+                <a>Master Lists</a>
+            </li>
+            <li class="active">
+                <strong>Items</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+    <div class="ibox-heading">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-horizontal">
+                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                <h3>List of Items</h3>
+                            </div>
+                            <div class="col-sm-7 col-md-7 col-lg-7">
+                                <div class="form-group pull-right">
+                                    <button type="button" class="btn btn-outline btn-rounded btn-primary" onclick="location.href='@Url.Action("Index", "Items")'"><i class="fa fa-refresh"></i> Refresh</button>
+                                    <button type="button" class="btn btn-outline btn-rounded btn-primary" id="add"><i class="fa fa-plus-circle"></i> Create New</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-horizontal">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtsearch" placeholder="Search" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ibox-content m-b-sm border-bottom">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div id="demoContent">
+                    @{
+                        var linkFormat = "<a id='doc_.(ItemCode)' class='view_doc'>.(ItemCode)</a>";
+                        var linkIconFormat = "<button type='button' id='doc_.(ItemCode)' class='edit_doc btn btn-warning'><i class='fa fa-pencil'></i></button>&nbsp;&nbsp;";
+                        linkIconFormat += "<a id='doc_.(ItemCode)' class='cancel_doc btn btn-danger'><i class='fa fa-trash'></i></a>";
+                    }
+                    @(Html.Awe().Grid("ApiDemoGrid")
+                                                                                                                                                                    .Columns(new[]
+                                                                                                                                                                    {
+                                                                                                                                                                                                                                            new Column{ClientFormat= linkIconFormat, Width = 120},
+                                                                                                                                                                                                                                            new Column {Bind = "ItemCode", Header = "Item Code",ClientFormat = linkFormat},
+                                                                                                                                                                                                                                            new Column {Bind = "ItemName", Header = "Item Name"  },
+                                                                                                                                                                                                                                            new Column {Bind = "GroupName", Header = "Group Name"  },
+                                                                                                                                                                                                                                            new Column {Bind = "WTaxName", Header = "Wtax Name"  },
+                                                                                                                                                                                                                                            new Column {Bind = "Status", Header = "Status", ClientFormatFunc = "Statustoggle", Width = 90}
+                                                                                                                                                                    })
+                                                                                                                                                                    .Mod(o => o.PageInfo().PageSize().ColumnsSelector())
+                                                                                                                                                                    .Resizable()
+                                                                                                                                                                    .Reorderable()
+                                                                                                                                                                    .Height(400)
+                                                                                                                                                                    .Groupable(false)
+                                                                                                                                                                    .Selectable(SelectionType.Single)
+                                                                                                                                                                    .Parent("filter", "filter")
+                                                                                                                                                                    .Parent("txtsearch", "search")
+                                                                                                                                                                    .Url(Url.Action("GetList", "Items")))
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Items details-->
+<div class="modal fade" id="MyModalItems">
+    <div class="modal-dialog" style="width:70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 id="ModalTitle">Create Items</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Items.ItemCode, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    @Html.DropDownListFor(model => model.SeriesOption, new SelectList(Model.SeriesOption, "Value", "Text"), "", new { @class = "form-control chosen-select", @id = "series" })
+                                </div>
+                                <div class="col-sm-5 col-md-5 col-lg-5">
+                                    @Html.EditorFor(model => model.Items.ItemCode, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "itemcode", @readonly = "true" } })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Items.ItemName, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                <div class="col-sm-9 col-md-9 col-lg-9">
+                                    @Html.EditorFor(model => model.Items.ItemName, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "itemname" } })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ItemGroupOption, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                <div class="col-sm-9 col-md-9 col-lg-9">
+                                    @Html.DropDownListFor(model => model.Items.GroupCode, new SelectList(Model.ItemGroupOption, "Value", "Text"), "- Please select item group -", new { @class = "form-control chosen-select", @id = "itemgroup" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="control-label col-sm-3 col-md-3 col-lg-3">
+                                    <label>UoM Group</label>
+                                </div>
+                                <div class="col-sm-9 col-md-9 col-lg-9">
+                                    <button type="button" class="btn btn-outline btn-primary pull-left" id="uomgroup">...</button>
+                                </div>
+                                @*<div class="col-sm-8 col-md-8 col-lg-8">
+                    </div>*@
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.WTaxOption, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                <div class="col-sm-9 col-md-9 col-lg-9">
+                                    @Html.DropDownListFor(model => model.Items.WtaxId, new SelectList(Model.WTaxOption, "Value", "Text"), "- Please select wtax -", new { @class = "form-control chosen-select", @id = "wtax" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Items.WholeSaleQty, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                <div class="col-sm-9 col-md-9 col-lg-9">
+                                    @Html.EditorFor(model => model.Items.WholeSaleQty, new { htmlAttributes = new { @class = "form-control", @placeholder = "0.00", @id = "wholesaleqty", @onkeypress = "return isNumberKey(event)" } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-outline btn-rounded btn-primary" id="items">Add Item</button>
+                                        <button type="button" class="btn btn-outline btn-rounded btn-danger" id="close">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    @*<div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="form-horizontal">
+                    &nbsp;*@
+
+                                    @*</div>
+                </div>
+            </div>*@
+                                </div>
+                                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            Selection Details
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="checkbox checkbox-success checkbox-circle">
+                                                        <input id="invitem" type="checkbox">
+                                                        <label for="checkbox8">
+                                                            Inventory Item
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="checkbox checkbox-success checkbox-circle">
+                                                        <input id="sellitem" type="checkbox">
+                                                        <label for="checkbox8">
+                                                            Sales Item
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="checkbox checkbox-success checkbox-circle">
+                                                        <input id="purchitem" type="checkbox">
+                                                        <label for="checkbox8">
+                                                            Purchase Item
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="checkbox checkbox-success checkbox-circle">
+                                                        <input id="status" type="checkbox">
+                                                        <label for="checkbox8">
+                                                            Status
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="tabs-container">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#tab-1">Inventory Data</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="tab-1" class="tab-pane active">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <div class="table-responsive">
+                                                                <div id="divForm" style="background-color:white;overflow:scroll;height:300px;" class="general-tab-table">
+                                                                    <table id="tableListWarehouse" class="footable table table-stripped table-hover table-striped table-bordered">
+                                                                        <thead>
+                                                                            <tr style="position:sticky;">
+                                                                                <th><div style="width:180px">Warehouse</div></th>
+                                                                                <th><div style="width:70px">In Stock</div></th>
+                                                                                <th><div style="width:70px">Committed</div></th>
+                                                                                <th><div style="width:70px">Ordered</div></th>
+                                                                                <th><div style="width:70px">Available</div></th>
+                                                                                <th><div style="width:70px">Item Cost</div></th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody></tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Item UoM details-->
+<div class="modal fade" id="MyModalUoM">
+    <div class="modal-dialog" style="width:60%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 id="ModalTitle"> UoM Group </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <button class="btn btn-outline btn-sm btn-rounded btn-info pull-left" id="add-item" onclick="AddNewItemUOM()" type="button"><i class="fa fa-plus-circle"></i> Add Row </button>
+                                    @*<button class="btn btn-outline btn-sm btn-rounded btn-info pull-left" id="remove-item" onclick="RemoveItem()" type="button"><i class="fa fa-plus-circle"></i> Remove Row</button>*@
+                                </div>
+                                <div class="form-group">
+                                    <div class="table-responsive">
+                                        <div id="divForm" style="background-color:white;overflow:scroll;height:300px;" class="general-tab-table">
+                                            <table id="tableListUoM" class="footable table table-stripped table-striped table-bordered">
+                                                <thead>
+                                                    <tr style="position:sticky;">
+                                                        <th><div style="width:50px">Action</div></th>
+                                                        <th><div style="width:40px">#</div></th>
+                                                        <th><div style="width:50px">Alt. Qty</div></th>
+                                                        <th><div style="width:150px">Alt. UoM</div></th>
+                                                        <th><div style="width:10px">=</div></th>
+                                                        <th><div style="width:50px">Base Qty</div></th>
+                                                        <th><div style="width:150px">Base UoM</div></th>
+                                                        <th><div style="width:115px">Price</div></th>
+                                                        <th><div style="width:115px">Total Price</div></th>
+                                                        @*<th><div style="width:100px">Smallest UoM</div></th>*@
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @*<tr class="rowItem" style="height: 30px;">
+                                                        <td class="general-row-linenum">
+                                                            <i class="fa fa-minus-circle"></i>
+                                                        </td>
+                                                        <td>
+                                                            @Html.DropDownListFor(model => model.UomGroupOption, new SelectList(Model.UomGroupOption, "Value", "Text"), "", new { @class = "form-control chosen-select", @id = "uomcode" })
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="qty" class="c4 form-control text-right qty" placeholder="0.00" onkeypress="return isNumberKey(event)" />
+                                                        </td>
+                                                        <td>
+                                                            @Html.DropDownListFor(model => model.UomGroupOption, new SelectList(Model.UomGroupOption, "Value", "Text"), "", new { @class = "form-control chosen-select", @id = "baseuom" })
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="price" class="c5 form-control text-right price" placeholder="0.00" onkeypress="return isNumberKey(event)" />
+                                                        </td>
+                                                    </tr>*@
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline btn-sm btn-rounded btn-info" id="uomgroupdetail">Add Uom Group </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/laddaStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/switcheryStyles")
+    <link href="~/Content/plugins/sweetalert/sweetalert2.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-toggle.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/iCheck")
+    <script src="~/Scripts/bootstap-toggle.js"></script>
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/switchery")
+    <script src="~/Scripts/plugins/sweetalert/sweetalert2.min.js"></script>
+    <script src="~/Scripts/MerchandisingJS/Items/Items.js"></script>
+}
+<style>
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        background-color: #ade3ea;
+        color: #808080;
+        cursor: pointer;
+    }
+
+    .general-row-linenum, .general-row-linenum i {
+        vertical-align: middle;
+        cursor: pointer;
+        padding-top: 8px;
+    }
+
+    .general-tab-table .selected {
+        background-color: #e82d2d !important;
+    }
+
+    .modal {
+        overflow-y: auto !important
+    }
+</style>
+

@@ -1,0 +1,386 @@
+﻿@model Merchandising.VM.Portal.SequenceVM
+@{
+    ViewBag.Title = "Sequence Table";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-7 col-md-7 col-lg-7">
+        <h2>Document Numbering - Setup</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Home_Index", "Home")">Home</a>
+            </li>
+            <li>
+                <a>Administration</a>
+            </li>
+            <li>
+                <a>Set-Up</a>
+            </li>
+            <li>
+                <a>General</a>
+            </li>
+            <li class="active">
+                <strong>Document Numbering</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+    <div class="ibox-heading">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-horizontal">
+                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                <h3>List of Document Numbering</h3>
+                            </div>
+                            <div class="col-sm-7 col-md-7 col-lg-7">
+                                <div class="form-group pull-right">
+                                    <button type="button" class="btn btn-outline btn-rounded btn-primary" onclick="location.href='@Url.Action("Index", "SequenceTable")'"><i class="fa fa-refresh"></i> Refresh</button>
+                                    @*<button type="button" class="btn btn-outline btn-rounded btn-primary" id="addseqdoc"><i class="fa fa-plus-circle"></i> Add Document</button>*@
+                                    <button type="button" class="btn btn-outline btn-rounded btn-primary" id="add"><i class="fa fa-plus-circle"></i> Add Document Numbering</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-horizontal">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtsearch" placeholder="Search" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ibox-content m-b-sm border-bottom">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div id="demoContent">
+                    @{
+                        var linkFormat = "<a id='doc_.(Id)_.(Document)_.(DocSubType)_.(ObjectCode)_.(DocumentType)_.(Series)' class='view_doc'>.(Document)</a>";
+                        var linkIconFormat = "<button type='button' id='doc_.(Id)_.(Document)_.(DocSubType)_.(ObjectCode)_.(DocumentType)_.(Series)' class='view_child_doc btn btn-primary'><i class='fa fa-recycle'></i></button>&nbsp;&nbsp;";
+                        linkIconFormat += "<button type='button' id='doc_.(Id)_.(Document)_.(DocSubType)_.(ObjectCode)_.(DocumentType)_.(Series)' class='edit_doc btn btn-warning'><i class='fa fa-pencil'></i></button>&nbsp;&nbsp;";
+                        linkIconFormat += "<a id='doc_.(Id)_.(Document)_.(DocSubType)_.(ObjectCode)_.(DocumentType)_.(Series)' class='cancel_doc btn btn-danger'><i class='fa fa-trash'></i></a>";
+                    }
+                    @(Html.Awe().Grid("ApiDemoGrid")
+                                                                                                            .Columns(new[]
+                                                                                                            {
+                                                                                                                                new Column{ClientFormat= linkIconFormat,Header="Action", Width = 150},
+                                                                                                                                new Column {Bind = "Id", Header = "Id",Hidden=true  },
+                                                                                                                                new Column {Bind = "Document", Header = "Document", Width = 250,ClientFormat = linkFormat  },
+                                                                                                                                new Column {Bind = "DocumentType", Header = "Document Type"  },
+                                                                                                                                new Column {Bind = "DocSubType", Header = "Doc-Sub Type",Hidden=true  },
+                                                                                                                                new Column {Bind = "ObjectCode", Header = "Object Code",Hidden=true  },
+                                                                                                                                new Column {Bind = "Series", Header = "Series" ,Hidden=true  },
+                                                                                                                                new Column {Bind = "DefaultSeries", Header = "Default Series"  },
+                                                                                                                                new Column {Bind = "InitialNum", Header = "First No."  },
+                                                                                                                                new Column {Bind = "NextNumber", Header = "Next No."  },
+                                                                                                                                new Column {Bind = "LastNum", Header = "Last No."  },
+                                                                                                            })
+                                                                                                            .Mod(o => o.PageInfo().PageSize().ColumnsSelector())
+                                                                                                            .Resizable()
+                                                                                                            .Reorderable()
+                                                                                                            .Height(400)
+                                                                                                            .Groupable(false)
+                                                                                                            .Selectable(SelectionType.Single)
+                                                                                                            .Parent("filter", "filter")
+                                                                                                            .Parent("txtsearch", "search")
+                                                                                                            .Url(Url.Action("GetList", "SequenceTable")))
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Document Numbering details-->
+<div class="modal animation_select" data-animation="rotateOut" id="MyModalSequence">
+    <div class="modal-dialog " style="width:50%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 id="ModalTitle">Create Sequence</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DocumentOption, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            <input type="hidden" id="seqid" />
+                            @Html.DropDownListFor(model => model.DocumentOption, new SelectList(Model.DocumentOption, "Value", "Text"), "- Please select document -", new { @class = "form-control chosen-select", @id = "seqdocument" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SeriesOption, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            @Html.DropDownListFor(model => model.SeriesOption, new SelectList(Model.SeriesOption, "Value", "Text"), "- Please select default series -", new { @class = "form-control chosen-select", @id = "defaultseries" })
+                            <input type="hidden" id="series" />
+                        </div>
+                        @*@Html.LabelFor(model => model.Sequence.DefaultSeries, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                @Html.EditorFor(model => model.Sequence.DefaultSeries, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "defaultseries" } })
+                            </div>*@
+                    </div>
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.Sequence.DocType, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                @Html.EditorFor(model => model.Sequence.DocType, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "doctype", @readonly = "true" } })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BranchOption, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                @Html.DropDownListFor(model => model.Sequence.BranchCode, new SelectList(Model.BranchOption, "Value", "Text"), "- Please select branch -", new { @class = "form-control chosen-select", @id = "branchcode" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Sequence.SeriesName, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                @Html.EditorFor(model => model.Sequence.SeriesName, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "seqseriesname", @readonly = "true" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Sequence.Prefix, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                @Html.EditorFor(model => model.Sequence.Prefix, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "seqprefix" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Sequence.Suffix, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                @Html.EditorFor(model => model.Sequence.Suffix, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "seqsuffix" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Sequence.InitialNum, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-sm-9 col-md-9 col-lg-9">
+                               <input type="text" class="form-control text-right" placeholder="0" id="seqinitialnum" onkeypress="return isNumberKey(this)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Sequence.NextNumber, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                <input type="text" class="form-control text-right" placeholder="0" id="seqnextnum" onkeypress="return isNumberKey(this)" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Sequence.LastNumber, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                <input type="text" class="form-control text-right" placeholder="0" id="seqlastnum" onkeypress="return isNumberKey(this)" readonly />
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline btn-rounded btn-primary" id="sequence">Add Sequence</button>
+                @*<button type="button" class="btn btn-outline btn-rounded btn-warning" id="clear">Clear</button>*@
+                <button type="button" class="btn btn-outline btn-rounded btn-danger" id="seqclose">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Child Document Numbering details-->
+<div class="modal inmodal" id="MyModalSequenceLines" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width:90%">
+        <div class="modal-content animated bounceInRight">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a href="#" class="close" data-dismiss="modal">&times;</a>
+                            <h4 id="ModalTitleLines">Series - Setup</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <button class="btn btn-outline btn-sm btn-rounded btn-info pull-left" id="add-item" onclick="AddNewItemRow()" type="button"><i class="fa fa-plus-circle"></i> Add New</button>
+                                </div>
+                                <div class="form-group">
+                                    <div class="table-responsive">
+                                        <div id="divForm" style="background-color:white;overflow:scroll;height:300px;" class="general-tab-table">
+                                            <table id="tableListSequenceLines" class="footable table table-stripped table-hover table-striped table-bordered">
+                                                <thead>
+                                                    <tr style="position:sticky;">
+                                                        <th><div style="width:70px">Action</div></th>
+                                                        <th><div style="width:50px">#</div></th>
+                                                        <th><div style="width:150px">Branch</div></th>
+                                                        <th><div style="width:150px">Name</div></th>
+                                                        <th><div style="width:100px">First No.</div></th>
+                                                        <th><div style="width:100px">Next No.</div></th>
+                                                        <th><div style="width:100px">Last No.</div></th>
+                                                        <th><div style="width:120px">Prefix</div></th>
+                                                        <th><div style="width:120px">Suffix</div></th>
+                                                        <th><div style="width:120px">Remarks</div></th>
+                                                        <th><div style="width:80px">No.Of Digits</div></th>
+                                                        <th><div style="width:80px">Default</div></th>
+                                                        <th><div style="width:20px">Lock</div></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline btn-rounded btn-primary" id="sequencelines">Add Lines</button>
+                            <button type="button" class="btn btn-outline btn-rounded btn-danger" id="lineclose">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Sequence Document details-->
+<div class="modal fade" id="MyModalDocument">
+    <div class="modal-dialog" style="width:90%">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a href="#" class="close" data-dismiss="modal">&times;</a>
+                        <h4 id="ModalTitle">Create Document</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-4 m-md-4 m-lg-4">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.SeqDocument.DocumentName, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                            @Html.EditorFor(model => model.SeqDocument.DocumentName, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "seqdocname" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.DocumentTypeOption, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                            @Html.DropDownListFor(model => model.SeqDocument.DocType, new SelectList(Model.DocumentTypeOption, "Value", "Text"), "- Please select document type -", new { @class = "form-control chosen-select", @id = "seqdoctype" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Sequence.DocSubType, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                            @Html.EditorFor(model => model.Sequence.DocSubType, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "seqdocsubtype" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.SeqDocument.Status, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                            <div class="checkbox checkbox-success checkbox-circle">
+                                                <input id="status" type="checkbox">
+                                                <label for="checkbox8">
+
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="pull-right">
+                                                <button type="button" class="btn btn-outline btn-rounded btn-primary" id="sequencedocument">Add Document</button>
+                                                <button type="button" class="btn btn-outline btn-rounded btn-danger" id="seqclear">Clear</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8 m-md-8 m-lg-8">
+                                <div class="form-horizontal">
+                                    <div class="tabs-container">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a data-toggle="tab" href="#tab-1">Document Details</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div id="tab-1" class="tab-pane active">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-horizontal">
+                                                                <div class="form-group">
+                                                                    <div class="table-responsive">
+                                                                        <div id="divForm" style="background-color:white;overflow:scroll;height:200px;" class="general-tab-table">
+                                                                            <table id="tableList" class="footable table table-stripped table-hover table-striped table-bordered">
+                                                                                <thead>
+                                                                                    <tr style="position:sticky;">
+                                                                                        @*<th><div style="width:20px"></div></th>*@
+                                                                                        <th><div style="width:250px">Document Name</div></th>
+                                                                                        <th><div style="width:150px">Document Type</div></th>
+                                                                                        <th><div style="width:150px">Doc-Sub Type</div></th>
+                                                                                        <th><div style="width:50px">Status</div></th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody></tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/laddaStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/switcheryStyles")
+    <link href="~/Content/plugins/sweetalert/sweetalert2.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-toggle.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/iCheck")
+    <script src="~/Scripts/bootstap-toggle.js"></script>
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/switchery")
+    <script src="~/Scripts/plugins/sweetalert/sweetalert2.min.js"></script>
+    <script src="~/Scripts/MerchandisingJS/SequenceTable/SequenceTable.js"></script>
+}
+<style>
+    .boldh .awe-col, .boldh {
+        color: blue;
+    }
+
+    .bluev {
+        color: blueviolet;
+    }
+
+    .pinkb {
+        background: pink !important;
+    }
+
+    .greenb {
+        background: #f0f9f7 !important;
+    }
+</style>
+

@@ -1,0 +1,353 @@
+﻿@model Merchandising.VM.Portal.PricelistsVM
+@{
+    ViewBag.Title = "Pricelists";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-7 col-md-7 col-lg-7">
+        <h2>Pricelists</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Home_Index", "Home")">Home</a>
+            </li>
+            <li>
+                <a>Administration</a>
+            </li>
+            <li>
+                <a>Set-Up</a>
+            </li>
+            <li>
+                <a>Items</a>
+            </li>
+            <li class="active">
+                <strong>Pricelists</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+    <div class="ibox-heading">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-horizontal">
+                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                <h3>List of Pricelists</h3>
+                            </div>
+                            <div class="col-sm-7 col-md-7 col-lg-7">
+                                <div class="form-group pull-right">
+                                    <button type="button" class="btn btn-outline btn-rounded btn-primary" onclick="location.href='@Url.Action("Index", "Pricelist")'"><i class="fa fa-refresh"></i> Refresh</button>
+                                    <button type="button" class="btn btn-outline btn-rounded btn-primary" id="add"><i class="fa fa-plus-circle"></i> Create New</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-horizontal">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtsearch" placeholder="Search" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ibox-content m-b-sm border-bottom">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div id="demoContent">
+                    @{
+                        var linkFormat = "<a id='doc_.(PricelistId)' class='view_doc'>.(PricelistId)</a>";
+                        var linkIconFormat = "<button type='button' id='doc_.(PricelistId)' class='edit_doc btn btn-warning'><i class='fa fa-pencil'></i></button>&nbsp;&nbsp;";
+                        linkIconFormat += "<a id='doc_.(PricelistId)' class='cancel_doc btn btn-danger'><i class='fa fa-trash'></i></a>";
+                    }
+                    @(Html.Awe().Grid("ApiDemoGrid")
+                    .Columns(new[]
+                    {
+                    new Column{ClientFormat= linkIconFormat, Width = 120},
+                    new Column {Bind = "PricelistId", Header = "Pricelist Id",ClientFormat = linkFormat},
+                    new Column {Bind = "Name", Header = "Name"  },
+                    new Column {Bind = "BasePricelist", Header = "Base Pricelist"},
+                    new Column {Bind = "Factor", Header = "Factor"  },
+                    new Column {Bind = "Status", Header = "Status", ClientFormatFunc = "Statustoggle", Width = 90}
+                    })
+                    .Mod(o => o.PageInfo().PageSize().ColumnsSelector())
+                    .Resizable()
+                    .Reorderable()
+                    .Height(400)
+                    .Groupable(false)
+                    .Selectable(SelectionType.Single)
+                    .Parent("filter", "filter")
+                    .Parent("txtsearch", "search")
+                    .Url(Url.Action("GetList", "Pricelist")))
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Pricelist header details-->
+<div class="modal inmodal" id="MyModalPricelist" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width:90%">
+        <div class="modal-content animated bounceInRight">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a href="#" class="close" data-dismiss="modal">&times;</a>
+                            <h3 id="ModalTitle">Create Pricelist</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-4 m-md-4 m-lg-4">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Pricelist.PricelistId, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                            @*<div class="col-sm-9 col-md-9 col-lg-9">
+                                                    @Html.EditorFor(model => model.Pricelist.PricelistId, new { htmlAttributes = new { @class = "form-control", id = "pricelistid", Value = Model.SequenceNumber, @disabled = "disabled" } })
+                                                    <input type="hidden" id="series" value="@Model.Series" />
+                                                </div>*@
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                @Html.DropDownListFor(model => model.SeriesOption, new SelectList(Model.SeriesOption, "Value", "Text"), "", new { @class = "form-control chosen-select", @id = "series" })
+                                            </div>
+                                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                                @Html.EditorFor(model => model.Pricelist.PricelistId, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "pricelistid", @readonly = "true" } })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Pricelist.Name, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                                <input type="hidden" id="oldprname" />
+                                                @Html.EditorFor(model => model.Pricelist.Name, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "pricelistname" } })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.BasePricelistOption, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                                @Html.DropDownListFor(model => model.Pricelist.BasePricelist, new SelectList(Model.BasePricelistOption, "Value", "Text"), "- Please select base pricelist -", new { @class = "form-control chosen-select", @id = "basepricelist" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Pricelist.Factor, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                                @Html.EditorFor(model => model.Pricelist.Factor, new { htmlAttributes = new { @class = "form-control touchspin2 text-right", @placeholder = "0.00", @id = "factor", @onkeypress = "return isNumberKey(event)" } })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.StatusOption, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                                <div class="checkbox checkbox-success checkbox-circle">
+                                                    <input id="status" type="checkbox">
+                                                    <label for="checkbox8">
+
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="pull-right">
+                                                    <button type="button" class="btn btn-outline btn-rounded btn-primary" id="pricelist">Add Pricelist</button>
+                                                    @*<button type="button" class="btn btn-outline btn-rounded btn-warning" id="clear">Clear</button>*@
+                                                    <button type="button" class="btn btn-outline btn-rounded btn-warning" id="plclose">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8 m-md-8 m-lg-8">
+                                    <div class="form-horizontal">
+                                        <div class="tabs-container">
+                                            <ul class="nav nav-tabs">
+                                                <li class="active"><a data-toggle="tab" href="#tab-1">Pricelist Item Details</a></li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div id="tab-1" class="tab-pane active">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-horizontal">
+                                                                    <div class="form-group">
+                                                                        <button class="btn btn-outline btn-sm btn-rounded btn-info pull-left" onclick="RefreshItems()" type="button"><i class="fa fa-refresh"></i> Refresh Itemlist</button>
+                                                                        @*<button class="btn btn-outline btn-sm btn-rounded btn-info pull-left" id="remove-item" onclick="RemoveItem()" type="button"><i class="fa fa-plus-circle"></i> Remove Row</button>*@
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <div class="table-responsive">
+                                                                            <div id="divForm" style="background-color:white;overflow:auto;height:300px;">
+                                                                                @*class="general-tab-table">*@
+                                                                                <table id="tableListItem" class="footable table table-stripped table-hover table-striped table-bordered">
+                                                                                    @*<table id="tableListItem" class="table table-striped table-bordered nowrap" style="width:100%">*@
+
+                                                                                    <thead>
+                                                                                        <tr style="position:sticky;">
+                                                                                            <th><div style="width:20px"></div></th>
+                                                                                            <th><div style="width:20px"></div></th>
+                                                                                            <th><div style="width:170px">Item Code</div></th>
+                                                                                            <th><div style="width:300px">Item Name</div></th>
+                                                                                            <th><div style="width:150px">UoM</div></th>
+                                                                                            <th><div style="width:135px">Price</div></th>
+                                                                                            <th><div style="width:135px">Wholesale Price</div></th>
+                                                                                            <th><div style="width:135px">Retail Price</div></th>
+                                                                                            <th><div style="width:50px">Status</div></th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody></tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Pricelist UoM Details-->
+<div class="modal inmodal" id="MyModalItemUoM" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width:50%">
+        <div class="modal-content animated bounceInLeft">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h4 id="ModalTitleItemUoM">Pricelist - UoM</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <button class="btn btn-outline btn-sm btn-rounded btn-info pull-left" id="add-item-uom" onclick="AddNewItemUoM()" type="button"><i class="fa fa-plus-circle"></i> Add Row</button>
+                                    @* <button class="btn btn-outline btn-sm btn-rounded btn-info pull-left" id="remove-item-uom" onclick="RemoveItemUoM()" type="button"><i class="fa fa-plus-circle"></i> Remove Row</button>*@
+                                </div>
+                                <div class="form-group">
+                                    <div class="table-responsive">
+                                        <div id="divForm" style="background-color:white;overflow:scroll;height:300px;">
+                                            @*class="general-tab-table-uom">*@
+                                            <table id="tableListUoM" class="footable table table-stripped table-hover table-striped table-bordered">
+
+                                                <thead>
+                                                    <tr style="position:sticky;">
+                                                        <th><div style="width:20px"></div></th>
+                                                        <th><div style="width:130px">UoM</div></th>
+                                                        <th><div style="width:50px">Quantity</div></th>
+                                                        <th><div style="width:50px;text-align:center">%</div></th>
+                                                        <th><div style="width:135px">Price</div></th>
+                                                        <th><div style="width:50px">Status</div></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @*<tr class="rowItemUoM" style="height:20px;">
+                                                            <td class="general-row-linenum-uom">
+                                                                <i class="fa fa-minus-circle"></i>
+                                                            </td>
+                                                            <td>
+                                                                <input type="hidden" id="uomitemcode" /><input type="hidden" id="uomitemline" />
+                                                                @Html.DropDownListFor(model => model.UoMOption, new SelectList(Model.UoMOption, "Value", "Value"), "", new { @class = "form-control chosen-select itemuom", @id = "itemuom" })
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="uomqty" class="c4 form-control text-right uomqty" placeholder="0.00" onkeypress="return isNumberKey(event)" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="uompercent" class="c4 form-control text-right uompercent" placeholder="0.00" onkeypress="return isNumberKey(event)" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="uomprice" class="c4 form-control text-right uomprice" placeholder="0.00" onkeypress="return isNumberKey(event)" />
+                                                            </td>
+                                                            <td style='text-align:center'>
+                                                                <input type="checkbox" id="uomstatus" class="i-checks" checked="checked">
+                                                            </td>
+                                                        </tr>*@
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline btn-sm btn-rounded btn-info" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/laddaStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/switcheryStyles")
+    <link href="~/Content/plugins/sweetalert/sweetalert2.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-toggle.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/ladda")
+    <script src="~/Scripts/bootstap-toggle.js"></script>
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/switchery")
+    <script src="~/Scripts/plugins/sweetalert/sweetalert2.min.js"></script>
+    <script src="~/Scripts/MerchandisingJS/Pricelist/Pricelist.js"></script>
+
+}
+<style>
+    .modal {
+        overflow-y: inherit !important
+    }
+
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        background-color: #ade3ea;
+        color: #808080;
+        cursor: pointer;
+    }
+
+    .general-row-linenum-item, .general-row-linenum-item i {
+        vertical-align: middle;
+        cursor: pointer;
+        padding-top: 8px;
+    }
+
+    .general-row-linenum-uom, .general-row-linenum-uom i {
+        vertical-align: middle;
+        cursor: pointer;
+        padding-top: 8px;
+    }
+
+    .general-tab-table .selected {
+        background-color: #e82d2d !important;
+    }
+
+    .general-tab-table-uom .selected {
+        background-color: #e82d2d !important;
+    }
+</style>
+
+

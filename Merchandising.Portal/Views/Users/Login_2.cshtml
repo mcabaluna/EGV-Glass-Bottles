@@ -1,0 +1,133 @@
+﻿@using Merchandising.DTO.Models;
+@model  Merchandising.DTO.Models.Users
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EGV | Login</title>
+    <link href="~/Images/Fav Icon.png" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="~/Content/animate.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+</head>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <body class="gray-bg">
+        <div class="loginColumns animated fadeInDown">
+            <div class="row">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-6">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger", @id = "toltip" })
+                    <div class="ibox" style="border: solid; border-color: darkslategray">
+                        @*<div class="row">*@
+                        @*<div class="col-md-4">
+                                <img src="~/Images/loginUser.JPG" class="img-shadow" />
+
+                            </div>
+                            <div class="col-md-8">*@
+                        <div class="ibox-heading">
+                            <div class="ibox-content">
+                                <h1 class="text-center">
+                                    @*<b><span class="fa fa-user-circle-o fa-2x"></span> EGV Glass Bottle</b>*@
+                                    <b><span class="fa fa-user-circle-o fa-2x"></span> AGS</b>
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-1">
+
+                                </div>
+                                <div class="col-md-10">
+                                    <form class="m-t" role="form" action="#">
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.UserId, new { @class = "form-control text-uppercase", @placeholder = "User ID", id = "userid" })
+                                            <i class="user-friends"></i>
+                                            @*</div>*@
+
+
+                                        </div>
+                                        <div class="form-group">
+
+                                            <div class="ui left icon input">
+                                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", id = "passcode" })
+                                                <i class="lock icon"></i>
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="col-md-1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-footer">
+                            <div class="col-md-1">
+                            </div>
+                            <div class="col-md-10">
+                                <button type="submit" class="btn btn-outline btn-rounded btn-primary full-width m-b"> <i class="fa fa-lock"></i> Login</button>
+                                @*   ©&nbsp;@DateTime.Now.Year Eduhome Limited. All rights reserved. <br />*@
+                            </div>
+                            <div class="col-md-1">
+                            </div>
+                            <p class="full-width m-b">
+                                @*<strong>Copyright @DateTime.Now.Year AGS. All rights reserved.</strong>*@
+                                ©&nbsp;@DateTime.Now.Year EGV Limited. All rights reserved. <br />
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+
+                </div>
+            </div>
+        </div>
+    </body>
+}
+
+</html>
+
+
+@section Styles {
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/laddaStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+
+
+@section Scripts{
+    @Scripts.Render("~/plugins/footable")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/plugins/peity")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/ladda")
+    @Scripts.Render("~/plugins/sweetAlert")
+    @Scripts.Render("~/plugins/chosen")
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+
+        $('.chosen-select').chosen({ width: "100%" });
+
+        // Bind normal buttons
+        Ladda.bind('.ladda-button', { timeout: 2000 });
+
+    </script>
+}

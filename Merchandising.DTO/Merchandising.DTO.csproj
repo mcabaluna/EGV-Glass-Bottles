@@ -1,0 +1,690 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F0A3E185-EAFE-43C0-955E-A5A2BEA15648}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Merchandising.DTO</RootNamespace>
+    <AssemblyName>Merchandising.DTO</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Migrations\201909211216038_Creations of Table.cs" />
+    <Compile Include="Migrations\201909211216038_Creations of Table.Designer.cs">
+      <DependentUpon>201909211216038_Creations of Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909221116160_Update BranchId datatype from int to string in Users Table.cs" />
+    <Compile Include="Migrations\201909221116160_Update BranchId datatype from int to string in Users Table.Designer.cs">
+      <DependentUpon>201909221116160_Update BranchId datatype from int to string in Users Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910031046435_initial.cs" />
+    <Compile Include="Migrations\201910031046435_initial.Designer.cs">
+      <DependentUpon>201910031046435_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910260351441_Update Users Data Type.cs" />
+    <Compile Include="Migrations\201910260351441_Update Users Data Type.Designer.cs">
+      <DependentUpon>201910260351441_Update Users Data Type.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911020524311_Update Users Table.cs" />
+    <Compile Include="Migrations\201911020524311_Update Users Table.Designer.cs">
+      <DependentUpon>201911020524311_Update Users Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911020540414_Update User fields .cs" />
+    <Compile Include="Migrations\201911020540414_Update User fields .Designer.cs">
+      <DependentUpon>201911020540414_Update User fields .cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911020840361_Update Branch Table.cs" />
+    <Compile Include="Migrations\201911020840361_Update Branch Table.Designer.cs">
+      <DependentUpon>201911020840361_Update Branch Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911101400053_Update Status data type.cs" />
+    <Compile Include="Migrations\201911101400053_Update Status data type.Designer.cs">
+      <DependentUpon>201911101400053_Update Status data type.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911101605304_branches.cs" />
+    <Compile Include="Migrations\201911101605304_branches.Designer.cs">
+      <DependentUpon>201911101605304_branches.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911101642315_Major update on Status field from int to bool data type.cs" />
+    <Compile Include="Migrations\201911101642315_Major update on Status field from int to bool data type.Designer.cs">
+      <DependentUpon>201911101642315_Major update on Status field from int to bool data type.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911181549211_Update code data type to string.cs" />
+    <Compile Include="Migrations\201911181549211_Update code data type to string.Designer.cs">
+      <DependentUpon>201911181549211_Update code data type to string.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911181550294_delete initial bpgorup.cs" />
+    <Compile Include="Migrations\201911181550294_delete initial bpgorup.Designer.cs">
+      <DependentUpon>201911181550294_delete initial bpgorup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911181552161_recreate bpgroup model.cs" />
+    <Compile Include="Migrations\201911181552161_recreate bpgroup model.Designer.cs">
+      <DependentUpon>201911181552161_recreate bpgroup model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911190716254_Update Payment Terms Table .cs" />
+    <Compile Include="Migrations\201911190716254_Update Payment Terms Table .Designer.cs">
+      <DependentUpon>201911190716254_Update Payment Terms Table .cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911191443328_Update Branch under Warehouse Table.cs" />
+    <Compile Include="Migrations\201911191443328_Update Branch under Warehouse Table.Designer.cs">
+      <DependentUpon>201911191443328_Update Branch under Warehouse Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911191450175_revert Warehouse Table.cs" />
+    <Compile Include="Migrations\201911191450175_revert Warehouse Table.Designer.cs">
+      <DependentUpon>201911191450175_revert Warehouse Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911191451144_update Branch Field to List.cs" />
+    <Compile Include="Migrations\201911191451144_update Branch Field to List.Designer.cs">
+      <DependentUpon>201911191451144_update Branch Field to List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911241136248_Update Status of Pricelists child.cs" />
+    <Compile Include="Migrations\201911241136248_Update Status of Pricelists child.Designer.cs">
+      <DependentUpon>201911241136248_Update Status of Pricelists child.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911241236263_Update SequenceTable.cs" />
+    <Compile Include="Migrations\201911241236263_Update SequenceTable.Designer.cs">
+      <DependentUpon>201911241236263_Update SequenceTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911241241013_Update SequenceTable with numbering.cs" />
+    <Compile Include="Migrations\201911241241013_Update SequenceTable with numbering.Designer.cs">
+      <DependentUpon>201911241241013_Update SequenceTable with numbering.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911241522044_Add sequence document table.cs" />
+    <Compile Include="Migrations\201911241522044_Add sequence document table.Designer.cs">
+      <DependentUpon>201911241522044_Add sequence document table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912090806030_Update User table.cs" />
+    <Compile Include="Migrations\201912090806030_Update User table.Designer.cs">
+      <DependentUpon>201912090806030_Update User table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912090934569_Adding User Role, Role Page and Role Menus.cs" />
+    <Compile Include="Migrations\201912090934569_Adding User Role, Role Page and Role Menus.Designer.cs">
+      <DependentUpon>201912090934569_Adding User Role, Role Page and Role Menus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912091521058_Updating Users Table field Roles.cs" />
+    <Compile Include="Migrations\201912091521058_Updating Users Table field Roles.Designer.cs">
+      <DependentUpon>201912091521058_Updating Users Table field Roles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912091529063_Update Role menus and Role Page.cs" />
+    <Compile Include="Migrations\201912091529063_Update Role menus and Role Page.Designer.cs">
+      <DependentUpon>201912091529063_Update Role menus and Role Page.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912091617158_Add Sub Menu Field in Role Menus.cs" />
+    <Compile Include="Migrations\201912091617158_Add Sub Menu Field in Role Menus.Designer.cs">
+      <DependentUpon>201912091617158_Add Sub Menu Field in Role Menus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912181445003_Adding Series Field.cs" />
+    <Compile Include="Migrations\201912181445003_Adding Series Field.Designer.cs">
+      <DependentUpon>201912181445003_Adding Series Field.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912181521540_Update IEnumerable to List.cs" />
+    <Compile Include="Migrations\201912181521540_Update IEnumerable to List.Designer.cs">
+      <DependentUpon>201912181521540_Update IEnumerable to List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912221012380_Additional BPWTax Table.cs" />
+    <Compile Include="Migrations\201912221012380_Additional BPWTax Table.Designer.cs">
+      <DependentUpon>201912221012380_Additional BPWTax Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912240734052_Adding ContactPerson field in BP.cs" />
+    <Compile Include="Migrations\201912240734052_Adding ContactPerson field in BP.Designer.cs">
+      <DependentUpon>201912240734052_Adding ContactPerson field in BP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912240852089_Update BP Type data type.cs" />
+    <Compile Include="Migrations\201912240852089_Update BP Type data type.Designer.cs">
+      <DependentUpon>201912240852089_Update BP Type data type.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912261617331_Change Province data type.cs" />
+    <Compile Include="Migrations\201912261617331_Change Province data type.Designer.cs">
+      <DependentUpon>201912261617331_Change Province data type.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912280411594_Update Pricelist Structure.cs" />
+    <Compile Include="Migrations\201912280411594_Update Pricelist Structure.Designer.cs">
+      <DependentUpon>201912280411594_Update Pricelist Structure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912281400508_additional column ItemCode for PricelistUom Table.cs" />
+    <Compile Include="Migrations\201912281400508_additional column ItemCode for PricelistUom Table.Designer.cs">
+      <DependentUpon>201912281400508_additional column ItemCode for PricelistUom Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912281509301_Update Pricelist Lines.cs" />
+    <Compile Include="Migrations\201912281509301_Update Pricelist Lines.Designer.cs">
+      <DependentUpon>201912281509301_Update Pricelist Lines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912290525319_Additional fields SInvoice for SalesInvoice.cs" />
+    <Compile Include="Migrations\201912290525319_Additional fields SInvoice for SalesInvoice.Designer.cs">
+      <DependentUpon>201912290525319_Additional fields SInvoice for SalesInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912290627238_Additional TermId for Sales Invoice Table.cs" />
+    <Compile Include="Migrations\201912290627238_Additional TermId for Sales Invoice Table.Designer.cs">
+      <DependentUpon>201912290627238_Additional TermId for Sales Invoice Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912300523323_Remove Collection and Payment.cs" />
+    <Compile Include="Migrations\201912300523323_Remove Collection and Payment.Designer.cs">
+      <DependentUpon>201912300523323_Remove Collection and Payment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912300549318_Incoming.cs" />
+    <Compile Include="Migrations\201912300549318_Incoming.Designer.cs">
+      <DependentUpon>201912300549318_Incoming.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912300558179_Incomings.cs" />
+    <Compile Include="Migrations\201912300558179_Incomings.Designer.cs">
+      <DependentUpon>201912300558179_Incomings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912300621247_IncomingLines.cs" />
+    <Compile Include="Migrations\201912300621247_IncomingLines.Designer.cs">
+      <DependentUpon>201912300621247_IncomingLines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912300829476_Purchase Invoice.cs" />
+    <Compile Include="Migrations\201912300829476_Purchase Invoice.Designer.cs">
+      <DependentUpon>201912300829476_Purchase Invoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912300834449_Update SI to PI.cs" />
+    <Compile Include="Migrations\201912300834449_Update SI to PI.Designer.cs">
+      <DependentUpon>201912300834449_Update SI to PI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001041037275_Update User Role.cs" />
+    <Compile Include="Migrations\202001041037275_Update User Role.Designer.cs">
+      <DependentUpon>202001041037275_Update User Role.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001041212573_Update User RoleS.cs" />
+    <Compile Include="Migrations\202001041212573_Update User RoleS.Designer.cs">
+      <DependentUpon>202001041212573_Update User RoleS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001041217452_Update the roles without identity.cs" />
+    <Compile Include="Migrations\202001041217452_Update the roles without identity.Designer.cs">
+      <DependentUpon>202001041217452_Update the roles without identity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001041224142_update Roles table.cs" />
+    <Compile Include="Migrations\202001041224142_update Roles table.Designer.cs">
+      <DependentUpon>202001041224142_update Roles table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001051543013_Updating role id to identity.cs" />
+    <Compile Include="Migrations\202001051543013_Updating role id to identity.Designer.cs">
+      <DependentUpon>202001051543013_Updating role id to identity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001051550327_Updating role id to identities.cs" />
+    <Compile Include="Migrations\202001051550327_Updating role id to identities.Designer.cs">
+      <DependentUpon>202001051550327_Updating role id to identities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001051555146_Partial remove Roles.cs" />
+    <Compile Include="Migrations\202001051555146_Partial remove Roles.Designer.cs">
+      <DependentUpon>202001051555146_Partial remove Roles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001051557087_ReAdd Roles.cs" />
+    <Compile Include="Migrations\202001051557087_ReAdd Roles.Designer.cs">
+      <DependentUpon>202001051557087_ReAdd Roles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001121246064_Additional field Remarks on BP.cs" />
+    <Compile Include="Migrations\202001121246064_Additional field Remarks on BP.Designer.cs">
+      <DependentUpon>202001121246064_Additional field Remarks on BP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001121253376_Additional WholeSalesQty field on Item Table.cs" />
+    <Compile Include="Migrations\202001121253376_Additional WholeSalesQty field on Item Table.Designer.cs">
+      <DependentUpon>202001121253376_Additional WholeSalesQty field on Item Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001121257564_Additional field on Pricelist.cs" />
+    <Compile Include="Migrations\202001121257564_Additional field on Pricelist.Designer.cs">
+      <DependentUpon>202001121257564_Additional field on Pricelist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001121309477_Reupdate Wholesale and retail price .cs" />
+    <Compile Include="Migrations\202001121309477_Reupdate Wholesale and retail price .Designer.cs">
+      <DependentUpon>202001121309477_Reupdate Wholesale and retail price .cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001240917504_Additional field Whse and Delivery for Sales and Purchasing Tabes.cs" />
+    <Compile Include="Migrations\202001240917504_Additional field Whse and Delivery for Sales and Purchasing Tabes.Designer.cs">
+      <DependentUpon>202001240917504_Additional field Whse and Delivery for Sales and Purchasing Tabes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002061605226_Update Tables 2020-02-07.cs" />
+    <Compile Include="Migrations\202002061605226_Update Tables 2020-02-07.Designer.cs">
+      <DependentUpon>202002061605226_Update Tables 2020-02-07.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002080329006_Updating Sequence Table .cs" />
+    <Compile Include="Migrations\202002080329006_Updating Sequence Table .Designer.cs">
+      <DependentUpon>202002080329006_Updating Sequence Table .cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002080849382_Update Pricelist Uom Table.cs" />
+    <Compile Include="Migrations\202002080849382_Update Pricelist Uom Table.Designer.cs">
+      <DependentUpon>202002080849382_Update Pricelist Uom Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002081523322_Update Item OnHand Per Whse Table.cs" />
+    <Compile Include="Migrations\202002081523322_Update Item OnHand Per Whse Table.Designer.cs">
+      <DependentUpon>202002081523322_Update Item OnHand Per Whse Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002081546529_Update Id of Item OnHand per whse table.cs" />
+    <Compile Include="Migrations\202002081546529_Update Id of Item OnHand per whse table.Designer.cs">
+      <DependentUpon>202002081546529_Update Id of Item OnHand per whse table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002081558398_Temp remove itemonhandperwhse table.cs" />
+    <Compile Include="Migrations\202002081558398_Temp remove itemonhandperwhse table.Designer.cs">
+      <DependentUpon>202002081558398_Temp remove itemonhandperwhse table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002081601260_Readd per whse item.cs" />
+    <Compile Include="Migrations\202002081601260_Readd per whse item.Designer.cs">
+      <DependentUpon>202002081601260_Readd per whse item.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002090153414_Additional paidTodate field in transactions.cs" />
+    <Compile Include="Migrations\202002090153414_Additional paidTodate field in transactions.Designer.cs">
+      <DependentUpon>202002090153414_Additional paidTodate field in transactions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002290806268_additional fieldsssss.cs" />
+    <Compile Include="Migrations\202002290806268_additional fieldsssss.Designer.cs">
+      <DependentUpon>202002290806268_additional fieldsssss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003010642220_Update Users Fields.cs" />
+    <Compile Include="Migrations\202003010642220_Update Users Fields.Designer.cs">
+      <DependentUpon>202003010642220_Update Users Fields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003061658318_Update Incoming Payment table.cs" />
+    <Compile Include="Migrations\202003061658318_Update Incoming Payment table.Designer.cs">
+      <DependentUpon>202003061658318_Update Incoming Payment table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003061700389_Update incoming payment table 20200307.cs" />
+    <Compile Include="Migrations\202003061700389_Update incoming payment table 20200307.Designer.cs">
+      <DependentUpon>202003061700389_Update incoming payment table 20200307.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003081155184_Update Business Partner details.cs" />
+    <Compile Include="Migrations\202003081155184_Update Business Partner details.Designer.cs">
+      <DependentUpon>202003081155184_Update Business Partner details.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003081256267_Add Sequence Table Lines Table.cs" />
+    <Compile Include="Migrations\202003081256267_Add Sequence Table Lines Table.Designer.cs">
+      <DependentUpon>202003081256267_Add Sequence Table Lines Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003081302524_Update SequenceTable 20200308.cs" />
+    <Compile Include="Migrations\202003081302524_Update SequenceTable 20200308.Designer.cs">
+      <DependentUpon>202003081302524_Update SequenceTable 20200308.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003081337381_Update table 20200308_1.cs" />
+    <Compile Include="Migrations\202003081337381_Update table 20200308_1.Designer.cs">
+      <DependentUpon>202003081337381_Update table 20200308_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003081524419_Update Sequence Table Lines 20200308.cs" />
+    <Compile Include="Migrations\202003081524419_Update Sequence Table Lines 20200308.Designer.cs">
+      <DependentUpon>202003081524419_Update Sequence Table Lines 20200308.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003111740252_Add Object type field.cs" />
+    <Compile Include="Migrations\202003111740252_Add Object type field.Designer.cs">
+      <DependentUpon>202003111740252_Add Object type field.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003121604258_Add branchcode in sequencelines list table .cs" />
+    <Compile Include="Migrations\202003121604258_Add branchcode in sequencelines list table .Designer.cs">
+      <DependentUpon>202003121604258_Add branchcode in sequencelines list table .cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003121702413_Additional Pricelist field in saleisnvoice.cs" />
+    <Compile Include="Migrations\202003121702413_Additional Pricelist field in saleisnvoice.Designer.cs">
+      <DependentUpon>202003121702413_Additional Pricelist field in saleisnvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003121822479_Additional field in item table.cs" />
+    <Compile Include="Migrations\202003121822479_Additional field in item table.Designer.cs">
+      <DependentUpon>202003121822479_Additional field in item table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003122020162_Add Remarks field in sales and purchase.cs" />
+    <Compile Include="Migrations\202003122020162_Add Remarks field in sales and purchase.Designer.cs">
+      <DependentUpon>202003122020162_Add Remarks field in sales and purchase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003122031319_Update Pricelist id.cs" />
+    <Compile Include="Migrations\202003122031319_Update Pricelist id.Designer.cs">
+      <DependentUpon>202003122031319_Update Pricelist id.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003141950387_Add ItemLedger Table.cs" />
+    <Compile Include="Migrations\202003141950387_Add ItemLedger Table.Designer.cs">
+      <DependentUpon>202003141950387_Add ItemLedger Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003151039564_Additional field to determine smallest uom.cs" />
+    <Compile Include="Migrations\202003151039564_Additional field to determine smallest uom.Designer.cs">
+      <DependentUpon>202003151039564_Additional field to determine smallest uom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003181636502_Add total Price field in Item UoM.cs" />
+    <Compile Include="Migrations\202003181636502_Add total Price field in Item UoM.Designer.cs">
+      <DependentUpon>202003181636502_Add total Price field in Item UoM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191319429_additional field BaseQty for Item UoM Table.cs" />
+    <Compile Include="Migrations\202003191319429_additional field BaseQty for Item UoM Table.Designer.cs">
+      <DependentUpon>202003191319429_additional field BaseQty for Item UoM Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AuditTrailLogs.cs" />
+    <Compile Include="Models\BpAddress.cs" />
+    <Compile Include="Models\BpGroup.cs" />
+    <Compile Include="Models\BpWTax.cs" />
+    <Compile Include="Models\Branch.cs" />
+    <Compile Include="Models\BusinessPartner.cs" />
+    <Compile Include="Models\Cities.cs" />
+    <Compile Include="DBContextModel.cs" />
+    <Compile Include="Models\IncomingLines.cs" />
+    <Compile Include="Models\Incomings.cs" />
+    <Compile Include="Models\InvAdjustment.cs" />
+    <Compile Include="Models\InvAdjustmentLines.cs" />
+    <Compile Include="Models\ItemGroup.cs" />
+    <Compile Include="Models\ItemLedger.cs" />
+    <Compile Include="Models\ItemOnHandPerWhse.cs" />
+    <Compile Include="Models\Items.cs" />
+    <Compile Include="Models\ItemUoM.cs" />
+    <Compile Include="Models\ModeOfPayment.cs" />
+    <Compile Include="Models\PaymentTerms.cs" />
+    <Compile Include="Models\Pricelist.cs" />
+    <Compile Include="Models\PricelistLines.cs" />
+    <Compile Include="Models\PricelistUoM.cs" />
+    <Compile Include="Models\Provinces.cs" />
+    <Compile Include="Models\PurchaseInvoice.cs" />
+    <Compile Include="Models\PurchaseInvoiceLines.cs" />
+    <Compile Include="Models\RoleAuthorization.cs" />
+    <Compile Include="Models\Roles.cs" />
+    <Compile Include="Models\SalesInvoice.cs" />
+    <Compile Include="Models\SalesInvoiceLines.cs" />
+    <Compile Include="Models\SequenceDocument.cs" />
+    <Compile Include="Models\SequenceTable.cs" />
+    <Compile Include="Models\SequenceTableLines.cs" />
+    <Compile Include="Models\UoM.cs" />
+    <Compile Include="Models\RoleMenus.cs" />
+    <Compile Include="Models\RolePage.cs" />
+    <Compile Include="Models\Users.cs" />
+    <Compile Include="Models\Vat.cs" />
+    <Compile Include="Models\Warehouse.cs" />
+    <Compile Include="Models\WTax.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Merchandising\Merchandising.csproj">
+      <Project>{8bc1b32f-553e-422e-9213-8a615d663387}</Project>
+      <Name>Merchandising</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201909211216038_Creations of Table.resx">
+      <DependentUpon>201909211216038_Creations of Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909221116160_Update BranchId datatype from int to string in Users Table.resx">
+      <DependentUpon>201909221116160_Update BranchId datatype from int to string in Users Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910031046435_initial.resx">
+      <DependentUpon>201910031046435_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910260351441_Update Users Data Type.resx">
+      <DependentUpon>201910260351441_Update Users Data Type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911020524311_Update Users Table.resx">
+      <DependentUpon>201911020524311_Update Users Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911020540414_Update User fields .resx">
+      <DependentUpon>201911020540414_Update User fields .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911020840361_Update Branch Table.resx">
+      <DependentUpon>201911020840361_Update Branch Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911101400053_Update Status data type.resx">
+      <DependentUpon>201911101400053_Update Status data type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911101605304_branches.resx">
+      <DependentUpon>201911101605304_branches.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911101642315_Major update on Status field from int to bool data type.resx">
+      <DependentUpon>201911101642315_Major update on Status field from int to bool data type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911181549211_Update code data type to string.resx">
+      <DependentUpon>201911181549211_Update code data type to string.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911181550294_delete initial bpgorup.resx">
+      <DependentUpon>201911181550294_delete initial bpgorup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911181552161_recreate bpgroup model.resx">
+      <DependentUpon>201911181552161_recreate bpgroup model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911190716254_Update Payment Terms Table .resx">
+      <DependentUpon>201911190716254_Update Payment Terms Table .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911191443328_Update Branch under Warehouse Table.resx">
+      <DependentUpon>201911191443328_Update Branch under Warehouse Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911191450175_revert Warehouse Table.resx">
+      <DependentUpon>201911191450175_revert Warehouse Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911191451144_update Branch Field to List.resx">
+      <DependentUpon>201911191451144_update Branch Field to List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911241136248_Update Status of Pricelists child.resx">
+      <DependentUpon>201911241136248_Update Status of Pricelists child.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911241236263_Update SequenceTable.resx">
+      <DependentUpon>201911241236263_Update SequenceTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911241241013_Update SequenceTable with numbering.resx">
+      <DependentUpon>201911241241013_Update SequenceTable with numbering.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911241522044_Add sequence document table.resx">
+      <DependentUpon>201911241522044_Add sequence document table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912090806030_Update User table.resx">
+      <DependentUpon>201912090806030_Update User table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912090934569_Adding User Role, Role Page and Role Menus.resx">
+      <DependentUpon>201912090934569_Adding User Role, Role Page and Role Menus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912091521058_Updating Users Table field Roles.resx">
+      <DependentUpon>201912091521058_Updating Users Table field Roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912091529063_Update Role menus and Role Page.resx">
+      <DependentUpon>201912091529063_Update Role menus and Role Page.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912091617158_Add Sub Menu Field in Role Menus.resx">
+      <DependentUpon>201912091617158_Add Sub Menu Field in Role Menus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912181445003_Adding Series Field.resx">
+      <DependentUpon>201912181445003_Adding Series Field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912181521540_Update IEnumerable to List.resx">
+      <DependentUpon>201912181521540_Update IEnumerable to List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912221012380_Additional BPWTax Table.resx">
+      <DependentUpon>201912221012380_Additional BPWTax Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912240734052_Adding ContactPerson field in BP.resx">
+      <DependentUpon>201912240734052_Adding ContactPerson field in BP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912240852089_Update BP Type data type.resx">
+      <DependentUpon>201912240852089_Update BP Type data type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912261617331_Change Province data type.resx">
+      <DependentUpon>201912261617331_Change Province data type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912280411594_Update Pricelist Structure.resx">
+      <DependentUpon>201912280411594_Update Pricelist Structure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912281400508_additional column ItemCode for PricelistUom Table.resx">
+      <DependentUpon>201912281400508_additional column ItemCode for PricelistUom Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912281509301_Update Pricelist Lines.resx">
+      <DependentUpon>201912281509301_Update Pricelist Lines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912290525319_Additional fields SInvoice for SalesInvoice.resx">
+      <DependentUpon>201912290525319_Additional fields SInvoice for SalesInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912290627238_Additional TermId for Sales Invoice Table.resx">
+      <DependentUpon>201912290627238_Additional TermId for Sales Invoice Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912300523323_Remove Collection and Payment.resx">
+      <DependentUpon>201912300523323_Remove Collection and Payment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912300549318_Incoming.resx">
+      <DependentUpon>201912300549318_Incoming.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912300558179_Incomings.resx">
+      <DependentUpon>201912300558179_Incomings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912300621247_IncomingLines.resx">
+      <DependentUpon>201912300621247_IncomingLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912300829476_Purchase Invoice.resx">
+      <DependentUpon>201912300829476_Purchase Invoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912300834449_Update SI to PI.resx">
+      <DependentUpon>201912300834449_Update SI to PI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001041037275_Update User Role.resx">
+      <DependentUpon>202001041037275_Update User Role.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001041212573_Update User RoleS.resx">
+      <DependentUpon>202001041212573_Update User RoleS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001041217452_Update the roles without identity.resx">
+      <DependentUpon>202001041217452_Update the roles without identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001041224142_update Roles table.resx">
+      <DependentUpon>202001041224142_update Roles table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001051543013_Updating role id to identity.resx">
+      <DependentUpon>202001051543013_Updating role id to identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001051550327_Updating role id to identities.resx">
+      <DependentUpon>202001051550327_Updating role id to identities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001051555146_Partial remove Roles.resx">
+      <DependentUpon>202001051555146_Partial remove Roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001051557087_ReAdd Roles.resx">
+      <DependentUpon>202001051557087_ReAdd Roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001121246064_Additional field Remarks on BP.resx">
+      <DependentUpon>202001121246064_Additional field Remarks on BP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001121253376_Additional WholeSalesQty field on Item Table.resx">
+      <DependentUpon>202001121253376_Additional WholeSalesQty field on Item Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001121257564_Additional field on Pricelist.resx">
+      <DependentUpon>202001121257564_Additional field on Pricelist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001121309477_Reupdate Wholesale and retail price .resx">
+      <DependentUpon>202001121309477_Reupdate Wholesale and retail price .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001240917504_Additional field Whse and Delivery for Sales and Purchasing Tabes.resx">
+      <DependentUpon>202001240917504_Additional field Whse and Delivery for Sales and Purchasing Tabes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002061605226_Update Tables 2020-02-07.resx">
+      <DependentUpon>202002061605226_Update Tables 2020-02-07.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002080329006_Updating Sequence Table .resx">
+      <DependentUpon>202002080329006_Updating Sequence Table .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002080849382_Update Pricelist Uom Table.resx">
+      <DependentUpon>202002080849382_Update Pricelist Uom Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002081523322_Update Item OnHand Per Whse Table.resx">
+      <DependentUpon>202002081523322_Update Item OnHand Per Whse Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002081546529_Update Id of Item OnHand per whse table.resx">
+      <DependentUpon>202002081546529_Update Id of Item OnHand per whse table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002081558398_Temp remove itemonhandperwhse table.resx">
+      <DependentUpon>202002081558398_Temp remove itemonhandperwhse table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002081601260_Readd per whse item.resx">
+      <DependentUpon>202002081601260_Readd per whse item.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002090153414_Additional paidTodate field in transactions.resx">
+      <DependentUpon>202002090153414_Additional paidTodate field in transactions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002290806268_additional fieldsssss.resx">
+      <DependentUpon>202002290806268_additional fieldsssss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003010642220_Update Users Fields.resx">
+      <DependentUpon>202003010642220_Update Users Fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003061658318_Update Incoming Payment table.resx">
+      <DependentUpon>202003061658318_Update Incoming Payment table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003061700389_Update incoming payment table 20200307.resx">
+      <DependentUpon>202003061700389_Update incoming payment table 20200307.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003081155184_Update Business Partner details.resx">
+      <DependentUpon>202003081155184_Update Business Partner details.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003081256267_Add Sequence Table Lines Table.resx">
+      <DependentUpon>202003081256267_Add Sequence Table Lines Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003081302524_Update SequenceTable 20200308.resx">
+      <DependentUpon>202003081302524_Update SequenceTable 20200308.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003081337381_Update table 20200308_1.resx">
+      <DependentUpon>202003081337381_Update table 20200308_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003081524419_Update Sequence Table Lines 20200308.resx">
+      <DependentUpon>202003081524419_Update Sequence Table Lines 20200308.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003111740252_Add Object type field.resx">
+      <DependentUpon>202003111740252_Add Object type field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003121604258_Add branchcode in sequencelines list table .resx">
+      <DependentUpon>202003121604258_Add branchcode in sequencelines list table .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003121702413_Additional Pricelist field in saleisnvoice.resx">
+      <DependentUpon>202003121702413_Additional Pricelist field in saleisnvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003121822479_Additional field in item table.resx">
+      <DependentUpon>202003121822479_Additional field in item table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003122020162_Add Remarks field in sales and purchase.resx">
+      <DependentUpon>202003122020162_Add Remarks field in sales and purchase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003122031319_Update Pricelist id.resx">
+      <DependentUpon>202003122031319_Update Pricelist id.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003141950387_Add ItemLedger Table.resx">
+      <DependentUpon>202003141950387_Add ItemLedger Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003151039564_Additional field to determine smallest uom.resx">
+      <DependentUpon>202003151039564_Additional field to determine smallest uom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003181636502_Add total Price field in Item UoM.resx">
+      <DependentUpon>202003181636502_Add total Price field in Item UoM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191319429_additional field BaseQty for Item UoM Table.resx">
+      <DependentUpon>202003191319429_additional field BaseQty for Item UoM Table.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
