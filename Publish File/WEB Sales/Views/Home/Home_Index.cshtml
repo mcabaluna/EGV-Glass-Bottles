@@ -1,0 +1,359 @@
+﻿@model Merchandising.VM.Results.Dashboard_Results
+@{
+    ViewBag.Title = "Dashboard";
+}
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">Today</span>
+                    <h5>Sales for the Day</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">
+                        @Model.TotalSalesForTheDay.ToString("#,##0.00")
+                    </h1>
+                    <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
+                    <small>Sales Today</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-success pull-right">Monthly</span>
+                    <h5>Monthly Sales</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">
+                        @Model.TotalSalesPerMonth.ToString("#,##0.00")
+                    </h1>
+                    <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
+                    <small>Total sales</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-danger pull-right">Invoice count</span>
+                    <h5>Daily Invoice Count</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">@Model.DailySInvoiceCount</h1>
+                    <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
+                    <small>Invoices</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">Today</span>
+                    <h5>Collection for the Day</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">
+                        @Model.Collectionfortoday.ToString("#,##0.00")
+                    </h1>
+                    <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
+                    <small>Collection Today</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-success pull-right">Monthly</span>
+                    <h5>Monthly Collection</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">
+                        @Model.MonthlyCollection.ToString("#,##0.00")
+                    </h1>
+                    <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
+                    <small>Total Collection</small>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-info pull-right">Annual</span>
+                        <h5>Orders</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">275,800</h1>
+                        <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
+                        <small>New orders</small>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+    @*<div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Orders</h5>
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-xs btn-white active">Today</button>
+                                <button type="button" class="btn btn-xs btn-white">Monthly</button>
+                                <button type="button" class="btn btn-xs btn-white">Annual</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <div class="flot-chart">
+                                    <div class="flot-chart-content" id="flot-dashboard-chart"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <ul class="stat-list">
+                                    <li>
+                                        <h2 class="no-margins">2,346</h2>
+                                        <small>Total orders in period</small>
+                                        <div class="stat-percent">48% <i class="fa fa-level-up text-navy"></i></div>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 48%;" class="progress-bar"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h2 class="no-margins ">4,422</h2>
+                                        <small>Orders in last month</small>
+                                        <div class="stat-percent">60% <i class="fa fa-level-down text-navy"></i></div>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 60%;" class="progress-bar"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h2 class="no-margins ">9,180</h2>
+                                        <small>Monthly income from orders</small>
+                                        <div class="stat-percent">22% <i class="fa fa-bolt text-navy"></i></div>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 22%;" class="progress-bar"></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Items On-Hand per Warehouse</h5>
+                    <div class="form-group pull-right">
+                        <label>Warehouse: </label>
+                        @Html.DropDownListFor(model => model.WarehouseOption, new SelectList(Model.WarehouseOption, "Value", "Text"), "", new { @class = "form-control chosen-select", @id = "warehouse" })
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="table-responsive">
+                                        <div id="divForm" style="background-color:white;overflow:scroll;height:300px">
+                                            <table id="tableListItemPerWhse" class="footable table table-stripped table-striped table-bordered">
+                                                <colgroup>
+                                                    <col style="width:200px" />
+                                                    @*<col style="width:200px" />*@
+                                                    <col style="width:80px" />
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Items</th>
+                                                        @*<th>Warehouse</th>*@
+                                                        <th>On-Hand</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var menu in Model.ItemPerWhse.
+                                                                        GroupBy(b => new { b.ItemCode,b.Items }).
+                                                                        Select(a => new
+                                                                        {
+                                                                            ItemCode = a.Key.ItemCode,
+                                                                            Items = a.Key.Items,
+                                                                            OnHand = a.Sum(o => o.OnHand)
+                                                                        }).ToList())
+                                                    {
+                                                        <tr>
+                                                            <td><strong id="itemperwhse">@menu.Items</strong></td>
+                                                            <td><strong id="onhand">@menu.OnHand</strong></td>
+                                                            @*<input type="text" class="form-control" id="items" value="@menu.Items" readonly />*@
+                                                            @*<input type="hidden" id="whscode" value="@menu.Warehouse" />*@
+                                                            @*</td>*@
+                                                            @*<td>
+                                                                    <input type="text" class="form-control" id="onhand" value="@menu.OnHand" readonly />
+                                                                </td>*@
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Saleable Items (highest to Lowest)</h5>
+                    <div class="form-group pull-right">
+                        <label>Branch: </label>
+                        @Html.DropDownListFor(model => model.BranchOption, new SelectList(Model.BranchOption, "Value", "Text"), "", new { @class = "form-control chosen-select", @id = "branch" })
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="table-responsive">
+                                        <div id="divForm" style="background-color:white;overflow:scroll;height:300px">
+                                            <table id="tableListSaleableItem" class="footable table table-stripped table-striped table-bordered">
+                                                <colgroup>
+                                                    <col style="width:200px" />
+                                                    @*<col style="width:200px" />*@
+                                                    <col style="width:80px" />
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Items</th>
+                                                        @*<th>Branch</th>*@
+                                                        <th>Sold Qty</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var menu in Model.SaleableItems.
+                                                                        GroupBy(b => new { b.Items ,b.ItemCode }).
+                                                                        Select(a => new
+                                                                        {
+                                                                            Items = a.Key.Items,
+                                                                            SoldQty = a.Sum(o => o.SoldQty)
+                                                                        }).ToList())
+                                                    {
+                                                        <tr>
+                                                            <td><strong id="saleitem">@menu.Items</strong></td>
+                                                            <td><strong id="soldqty">@menu.SoldQty</strong></td>
+                                                            @*<td>
+                                                                    <input type="text" class="form-control" id="saleitem" value="@menu.Items" readonly />
+                                                                    <input type="hidden" id="branchcode" value="@menu.BranchCode" />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control" id="soldqty" value="@menu.SoldQty" readonly />
+                                                                </td>*@
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/flot")
+    @Scripts.Render("~/plugins/vectorMap")
+    @Scripts.Render("~/plugins/chosen")
+
+    <script type="text/javascript">
+            var model = @Html.Raw(Json.Encode(Model));
+        $(document).ready(function () {
+            $('.chosen-select').chosen({ width: "100%" });
+            $('#warehouse').val("All").trigger("chosen:updated");
+            $('#branch').val("All").trigger("chosen:updated");
+
+         
+        });
+
+        $('#warehouse').change(function () {
+            $('#tableListItemPerWhse tbody tr').remove();
+            var whse = $(this).val();
+            var itemsperwhselist = [];
+            if (whse === "All") {
+                $.map(model.ItemPerWhse, function (val) {
+                    var $item = $('#tableListItemPerWhse tbody');
+                    $item.append(
+                        '<tr>' +
+                        '<td><strong id="itemperwhse">' + val.Items + '</strong></td>' +
+                        '<td><strong id="onhand">' + addThousandsSeparator(parseFloat(val.OnHand).toFixed(2)) + '</strong></td>' +
+                        '</tr>');
+                });
+            }
+            else {
+                $.map(model.ItemPerWhse, function (val) {
+                    if (val.WhseCode == whse)
+                        itemsperwhselist.push(val);
+                });
+
+                $.map(itemsperwhselist, function (val) {
+                    var $item = $('#tableListItemPerWhse tbody');
+                    $item.append(
+                        '<tr>' +
+                        '<td><strong id="itemperwhse">' + val.Items + '</strong></td>' +
+                        '<td><strong id="onhand">' + addThousandsSeparator(parseFloat(val.OnHand).toFixed(2)) + '</strong></td>' +
+                        '</tr>');
+                });
+            }
+        });
+        $('#branch').change(function () {
+            $('#tableListSaleableItem tbody tr').remove();
+            var branch = $(this).val();
+            var saleableitemslist = [];
+            if (branch === "All") {
+                $.map(model.SaleableItems, function (val) {
+                    var $item = $('#tableListSaleableItem tbody');
+                    $item.append(
+                        '<tr>' +
+                        '<td><strong id="saleitem">' + val.Items + '</strong></td>' +
+                        '<td><strong id="soldqty">' + addThousandsSeparator(parseFloat(val.SoldQty).toFixed(2)) + '</strong></td>' +
+                        '</tr>');
+                });
+            } else {
+                $.map(model.SaleableItems, function (val) {
+                    if (val.BranchCode == branch)
+                        saleableitemslist.push(val);
+                });
+
+                $.map(saleableitemslist, function (val) {
+                    var $item = $('#tableListSaleableItem tbody');
+                    $item.append(
+                        '<tr>' +
+                        '<td><strong id="saleitem">' + val.Items + '</strong></td>' +
+                        '<td><strong id="soldqty">' + addThousandsSeparator(parseFloat(val.SoldQty).toFixed(2)) + '</strong></td>' +
+                        '</tr>');
+                });
+            }
+        });
+        function addThousandsSeparator(input) {
+            var num_parts = input.toString().split(".");
+            num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return num_parts.join(".");
+        }
+    </script>
+}

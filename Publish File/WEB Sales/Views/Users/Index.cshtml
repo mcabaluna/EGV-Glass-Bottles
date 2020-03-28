@@ -1,0 +1,228 @@
+﻿@model Merchandising.VM.Portal.UserVM
+@{
+    ViewBag.Title = "User";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-7 col-md-7 col-lg-7">
+        <h2>Users</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Home_Index", "Home")">Home</a>
+            </li>
+            <li>
+                <a>Administration</a>
+            </li>
+            <li>
+                <a>Set-Up</a>
+            </li>
+            <li>
+                <a>General</a>
+            </li>
+            <li class="active">
+                <strong>Users</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+    <div class="ibox-heading">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-horizontal">
+                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                <h3>List of Users</h3>
+                            </div>
+                            <div class="col-sm-7 col-md-7 col-lg-7">
+                                <div class="form-group pull-right">
+                                    <button type="button" class="btn btn-outline btn-rounded btn-primary" onclick="location.href='@Url.Action("Index", "Users")'"><i class="fa fa-refresh"></i> Refresh</button>
+                                    <button type="button" class="btn btn-outline btn-rounded btn-primary" id="add"><i class="fa fa-plus-circle"></i> Create New</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-horizontal">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtsearch" placeholder="Search" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ibox-content m-b-sm border-bottom">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div id="demoContent">
+                    @{
+                        var linkFormat = "<a id='doc_.(UserId)' class='view_doc'>.(UserId)</a>";
+                        var linkIconFormat = "<button type='button' id='doc_.(UserId)' class='edit_doc btn btn-warning'><i class='fa fa-pencil'></i></button>&nbsp;&nbsp;";
+                        linkIconFormat += "<a id='doc_.(UserId)' class='cancel_doc btn btn-danger'><i class='fa fa-trash'></i></a>";
+                    }
+                    @(Html.Awe().Grid("ApiDemoGrid")
+                                                                .Columns(new[]
+                                                                {
+                                                                                    new Column{ClientFormat= linkIconFormat, Width = 120},
+                                                                                    new Column {Bind = "UserId", Header = "User Id",ClientFormat = linkFormat},
+                                                                                    new Column {Bind = "UserName", Header = "User Name"  },
+                                                                                    new Column {Bind = "RoleName", Header = "Role Name"},
+                                                                                    new Column {Bind = "BranchName", Header = "Branch Name", Width = 200},
+                                                                                    new Column {Bind = "ContactNo", Header = "Contact No."},
+                                                                                    new Column {Bind = "Email", Header = "Email", Width = 200},
+                                                                                    new Column {Bind = "Status", Header = "Status", ClientFormatFunc = "Statustoggle", Width = 90},
+                                                                                    new Column {Bind = "LastAccess", Header = "Last Access"}
+                                                                })
+                                                                .Mod(o => o.PageInfo().PageSize().ColumnsSelector())
+                                                                .Resizable()
+                                                                .Reorderable()
+                                                                .Height(400)
+                                                                .Groupable(false)
+                                                                .Selectable(SelectionType.Single)
+                                                                .Parent("filter", "filter")
+                                                                .Parent("txtsearch", "search")
+                                                                .Url(Url.Action("GetList", "Users")))
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Creation of User-->
+<div class="modal fade" id="MyModalUser">
+    <div class="modal-dialog" style="width:50%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 id="ModalTitle">Create User</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Users.UserId, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            @Html.EditorFor(model => model.Users.UserId, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "userid" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Users.UserName, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            @Html.EditorFor(model => model.Users.UserName, new { htmlAttributes = new { @class = "form-control text-uppercase", id = "username" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Users.Password, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            @Html.EditorFor(model => model.Users.Password, new { htmlAttributes = new { @class = "form-control", id = "password" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Users.Email, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            @Html.EditorFor(model => model.Users.Email, new { htmlAttributes = new { @class = "form-control", id = "email" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Users.ContactNo, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            @Html.EditorFor(model => model.Users.ContactNo, new { htmlAttributes = new { @class = "form-control", @id = "contact", @onkeypress = "return isNumberKey(event)" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AccessRoleOption, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            @Html.DropDownListFor(model => model.Users.Role, new SelectList(Model.AccessRoleOption, "Value", "Text"), "", new { @class = "form-control chosen-select", @id = "role" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BranchOption, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            @Html.DropDownListFor(model => model.Users.BranchCode, new SelectList(Model.BranchOption, "Value", "Text"), "", new { @class = "form-control chosen-select", @id = "branch" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Users.Status, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            <div class="checkbox checkbox-success checkbox-circle">
+                                <input id="status" type="checkbox">
+                                <label for="checkbox8">
+
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Users.LastAccess, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            @Html.EditorFor(model => model.Users.LastAccess, new { htmlAttributes = new { @class = "form-control", id = "lastaccess", @readonly = "true" } })
+                        </div>
+                    </div>
+                    @*<div class="form-group" id="data_1">
+                            @Html.LabelFor(model => model.Users.LastAccess, htmlAttributes: new { @class = "control-label col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>@Html.EditorFor(model => model.Users.LastAccess, new { htmlAttributes = new { @class = "form-control", @id = "lastaccess", @readonly = "true" } })
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-outline btn-rounded btn-primary" id="user">Add User</button>
+                                <button type="button" class="btn btn-outline btn-rounded btn-warning" id="clear">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/laddaStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/switcheryStyles")
+    <link href="~/Content/plugins/sweetalert/sweetalert2.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-toggle.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/iCheck")
+    <script src="~/Scripts/bootstap-toggle.js"></script>
+    <script src="~/Scripts/plugins/sweetalert/sweetalert2.min.js"></script>
+    <script src="~/Scripts/MerchandisingJS/Users/Users.js"></script>
+}
+<style>
+    .boldh .awe-col, .boldh {
+        color: blue;
+    }
+
+    .bluev {
+        color: blueviolet;
+    }
+
+    .pinkb {
+        background: pink !important;
+    }
+
+    .greenb {
+        background: #f0f9f7 !important;
+    }
+</style>
+

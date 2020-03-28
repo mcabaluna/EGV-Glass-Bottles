@@ -1,0 +1,211 @@
+﻿@model Merchandising.VM.Portal.RoleAuthorizationVM
+@{
+    ViewBag.Title = "Authorization";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-7 col-md-7 col-lg-7">
+        <h2>Authorization</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Home_Index", "Home")">Home</a>
+            </li>
+            <li>
+                <a>Administration</a>
+            </li>
+            <li>
+                <a>Set-Up</a>
+            </li>
+            <li>
+                <a>Roles and Authorization</a>
+            </li>
+            <li class="active">
+                <strong>Authorization</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <div class="row">
+                        <div class="col-sm-5 col-md-5 col-lg-5">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.RolesOption, htmlAttributes: new { @class = "control-label col-sm-1 col-md-1 col-lg-1" })
+                                <div class="col-sm-11 col-md-11 col-lg-11">
+                                    @Html.DropDownListFor(model => model.RolesOption, new SelectList(Model.RolesOption, "Value", "Text"), "- Please select role -", new { @class = "form-control chosen-select", @id = "role" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-7 col-md-7 col-lg-7">
+                            <div class="pull-right">
+                                <div class="form-group">
+                                    <button class="btn btn-outline btn-rounded btn-info" type="button" id="authorization"> Create Authorization</button>
+                                    <button class="btn btn-outline btn-rounded btn-info" type="button" id="cancel"> Cancel</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-1"> Role Menus</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-2"> Role Page</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <button class="btn btn-outline btn-rounded btn-info" type="button" onclick="Default()"><i class="fa fa-plus-circle"></i> Get Default</button>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="table-responsive">
+                                                <div id="divForm" style="background-color:white;overflow:scroll;height:500px">
+                                                    <table id="tableList" class="footable table table-stripped table-striped table-bordered">
+                                                        <colgroup>
+                                                            <col style="width:200px" />
+                                                            <col style="width:200px" />
+                                                            <col style="width:80px" />
+                                                            <col style="width:80px" />
+                                                        </colgroup>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Menu Name</th>
+                                                                <th>Sub-Menu Name</th>
+                                                                <th>
+                                                                    <div class="checkbox checkbox-success checkbox-circle"><input id="chkVisibleAll" onchange="checkAllVisible(this)" name="chk[]" class="checkbox checkbox-success checkbox-circle" type="checkbox"><label for="checkbox8"></label>Visible</div>
+                                                                </th>
+                                                                <th>
+                                                                    <div class="checkbox checkbox-success checkbox-circle"><input id="chkStatusAll" onchange="checkAllStatus(this)" name="chk[]" class="checkbox checkbox-success checkbox-circle" type="checkbox"><label for="checkbox8"></label>Status</div>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var menu in Model.RoleMenus)
+                                                            {
+                                                                <tr>
+                                                                    <td><strong id="menu">@menu.MenuName</strong></td>
+                                                                    <td><strong id="submenu">@menu.SubMenuName</strong> </td>
+                                                                    <td>
+                                                                        <div class="checkbox checkbox-success checkbox-circle">
+                                                                            <input id="chkVisible" type="checkbox">
+                                                                            <label for="checkbox8">
+
+                                                                            </label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="checkbox checkbox-warning checkbox-circle">
+                                                                            <input id="chkStatus" type="checkbox">
+                                                                            <label for="checkbox8">
+
+                                                                            </label>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane" style="height:300px">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-horizontal">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
+    @Styles.Render("~/plugins/dateRangeStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/switcheryStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/nouiSliderStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/Content/plugins/ionRangeSlider/ionRangeStyles")
+    @Styles.Render("~/plugins/imagecropperStyles")
+    @Styles.Render("~/Content/plugins/colorpicker/colorpickerStyles")
+    @Styles.Render("~/plugins/select2Styles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/tagInputsStyles")
+    @Styles.Render("~/plugins/duallistStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    <link href="~/Content/plugins/sweetalert/sweetalert2.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/ionRange")
+    @Scripts.Render("~/plugins/nouiSlider")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/knob")
+    @Scripts.Render("~/plugins/imagecropper")
+    @Scripts.Render("~/plugins/colorpicker")
+    @Scripts.Render("~/plugins/clockpicker")
+    @Scripts.Render("~/plugins/dateRange")
+    @Scripts.Render("~/plugins/select2")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/tagInputs")
+    @Scripts.Render("~/plugins/duallist")
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/nestable")
+    <script src="~/Scripts/plugins/sweetalert/sweetalert2.min.js"></script>
+    <script src="~/Scripts/MerchandisingJS/RoleAuthorization/RoleAuthorization.js"></script>
+}
+<style>
+    .boldh .awe-col, .boldh {
+        color: blue;
+    }
+
+    .bluev {
+        color: blueviolet;
+    }
+
+    .pinkb {
+        background: pink !important;
+    }
+
+    .greenb {
+        background: #f0f9f7 !important;
+    }
+</style>

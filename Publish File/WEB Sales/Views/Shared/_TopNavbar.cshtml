@@ -1,0 +1,49 @@
+﻿<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            @*<li>
+                <span id="clockbox" class="m-r-sm text-muted welcome-message" style="color:WindowText;font-size:large"></span>
+            </li>*@
+            <li>
+                @*<a href="@Url.Action("Login", "Pages")">*@
+                <a href="#">
+                    <span id="clockbox" class="m-r-sm text-muted welcome-message" style="color:WindowText;font-size:large"></span>
+                    @*<i class="fa fa-power-off"></i> Log out*@
+                </a>
+            </li>
+            @*<li>
+                    <a class="right-sidebar-toggle">
+                        <i class="fa fa-tasks"></i>
+                    </a>
+                </li>*@
+        </ul>
+    </nav>
+</div>
+<script type="text/javascript">
+    function GetClock() {
+        var d = new Date();
+        var nmonth = d.getMonth(), ndate = d.getDate(), nyear = d.getFullYear(), day = d.getDay();
+        var nhour = d.getHours(), nmin = d.getMinutes(), nsec = d.getSeconds(), ap;
+
+        months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+        days = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        if (nhour == 0) { ap = " AM"; nhour = 12; }
+        else if (nhour < 12) { ap = " AM"; }
+        else if (nhour == 12) { ap = " PM"; }
+        else if (nhour > 12) { ap = " PM"; nhour -= 12; }
+
+        if (nmin <= 9) nmin = "0" + nmin;
+        if (nsec <= 9) nsec = "0" + nsec;
+
+        //var clocktext = "" + (nmonth + 1) + " " + ndate + ", " + nyear + " " + nhour + ":" + nmin + ":" + nsec + ap + "";
+        //document.getElementById('clockbox').innerHTML = clocktext;
+        var clocktext = '' + days[day] + ' - ' + months[nmonth] + ' ' + ndate + ', ' + nyear + ' ' + nhour + ':' + nmin + ':' + nsec + ap;
+        document.getElementById('clockbox').innerHTML = clocktext;
+    }
+
+    GetClock();
+    setInterval(GetClock, 1000);
+</script>
